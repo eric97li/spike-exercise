@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProfileScreen from './components/ProfileScreen';
 import OrderScreen from './components/OrderScreen';
 import MenuScreen from './components/MenuScreen';
-
+import AdminControls from './components/AdminControlsScreen';
 import LoginScreen from './components/LoginScreen';
 import SignUpScreen from './components/SignUpScreen';
 
@@ -37,8 +37,52 @@ export default class App extends Component {
 
 	createTabNavigator(props) {
 		const Tab = createBottomTabNavigator();
+		let role = 'Customer';
+		//Middle Tab will change depending on the role of the user
+		let customizedTab = (
+			<Tab.Screen
+				name='Orders'
+				options={{
+					tabBarIcon: () => {
+						let iconName = `md-calendar`;
+						return <Ionicons name={iconName} size={25} />;
+					},
+				}}>
+				{(props) => <OrderScreen {...props} username={this.state.username} />}
+			</Tab.Screen>
+		);
+		if (role === 'Admin') {
+			customizedTab = (
+				<Tab.Screen
+					name='Admin Controls'
+					options={{
+						tabBarIcon: () => {
+							let iconName = `md-settings`;
+							return <Ionicons name={iconName} size={25} />;
+						},
+					}}>
+					{(props) => (
+						<AdminControls {...props} username={this.state.username} />
+					)}
+				</Tab.Screen>
+			);
+		}
+
+		//Create Tab Navigator
 		return (
 			<Tab.Navigator>
+				<Tab.Screen
+					name='Menu'
+					options={{
+						tabBarIcon: () => {
+							let iconName = `md-pizza`;
+							return <Ionicons name={iconName} size={25} />;
+						},
+					}}>
+					{(props) => <MenuScreen {...props} username={this.state.username} />}
+				</Tab.Screen>
+				{customizedTab}
+
 				<Tab.Screen
 					name='Profile'
 					options={{
@@ -55,26 +99,6 @@ export default class App extends Component {
 						/>
 					)}
 				</Tab.Screen>
-				<Tab.Screen
-					name='Orders'
-					options={{
-						tabBarIcon: () => {
-							let iconName = `md-calendar`;
-							return <Ionicons name={iconName} size={25} />;
-						},
-					}}>
-					{(props) => <OrderScreen {...props} username={this.state.username} />}
-				</Tab.Screen>
-				<Tab.Screen
-					name='Menu'
-					options={{
-						tabBarIcon: () => {
-							let iconName = `md-pizza`;
-							return <Ionicons name={iconName} size={25} />;
-						},
-					}}>
-					{(props) => <MenuScreen {...props} username={this.state.username} />}
-				</Tab.Screen>
 			</Tab.Navigator>
 		);
 	}
@@ -83,6 +107,8 @@ export default class App extends Component {
 		return (
 			<NavigationContainer>
 				<Stack.Navigator>
+					{/* Temporarily Commented Out to avoid login functionality */}
+
 					{/* <Stack.Screen 
           name = "Login"
           options={{title: 'Badger Bytes'}}
