@@ -11,7 +11,14 @@ import {
 export default class ProfileScreen extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			firstName: '',
+			lastName: '',
+			password: '',
+			phonenumber: '',
+			address: '',
+			preferredPayment: '',
+		};
 		this.updateProfile = this.updateProfile.bind(this);
 	}
 
@@ -29,7 +36,9 @@ export default class ProfileScreen extends Component {
 						alignContent: 'center',
 						alignItems: 'center',
 					}}>
-					<Text style={{ fontWeight: '700', fontSize: 40 }}>About Me</Text>
+					<Text style={{ fontWeight: '700', fontSize: 40 }}>
+						Profile Screen
+					</Text>
 					<Text style={{ fontSize: 20 }}>Update Your Account Info Below</Text>
 					<View style={{ height: 50 }}></View>
 
@@ -49,10 +58,40 @@ export default class ProfileScreen extends Component {
 						placeholder={'Smith'}
 					/>
 
+					<Text>Phone Number</Text>
+					<TextInput
+						placeholderTextColor='#5EA9F4'
+						style={styles.input}
+						onChangeText={(text) => this.setState({ phonenumber: text })}
+						placeholder={'555-5555'}
+					/>
+
+					<Text>Address</Text>
+					<TextInput
+						placeholderTextColor='#5EA9F4'
+						style={styles.input}
+						onChangeText={(text) => this.setState({ address: text })}
+						placeholder={'1800 Pennslyvania Avenue'}
+					/>
+
+					<Text>Preferred Payment</Text>
+					<TextInput
+						placeholderTextColor='#5EA9F4'
+						style={styles.input}
+						onChangeText={(text) => this.setState({ preferredPayment: text })}
+						placeholder={'Apple Pay'}
+					/>
+
+					{/* Can't modify role */}
+
 					<View style={{ flexDirection: 'row', marginTop: 10 }}>
 						<TouchableOpacity
+							style={styles.button}
 							title='Save Information'
-							onPress={this.updateProfile}></TouchableOpacity>
+							// onPress={this.updateProfile}
+							onPress={() => alert('Functionality not implemented')}>
+							<Text> Confirm </Text>
+						</TouchableOpacity>
 					</View>
 				</View>
 			</React.Fragment>
@@ -74,9 +113,7 @@ const styles = StyleSheet.create({
 	spaceVertical: {
 		height: 15,
 	},
-	TouchableOpacityInline: {
-		display: 'flex',
-	},
+
 	input: {
 		width: 200,
 		padding: 10,
@@ -92,5 +129,10 @@ const styles = StyleSheet.create({
 		height: 100,
 		borderColor: '#5EA9F4',
 		borderWidth: 1,
+	},
+	button: {
+		alignItems: 'center',
+		backgroundColor: '#5EA9F4',
+		padding: 10,
 	},
 });
