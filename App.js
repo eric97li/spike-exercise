@@ -6,9 +6,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProfileScreen from './components/ProfileScreen';
-import OrderScreen from './components/OrderScreen';
+import OrdersScreen from './components/OrdersScreen';
 import MenuScreen from './components/MenuScreen';
-import AdminControls from './components/AdminControlsScreen';
+import UsageReports from './components/UsageReportScreen';
 import LoginScreen from './components/LoginScreen';
 import SignUpScreen from './components/SignUpScreen';
 
@@ -48,7 +48,7 @@ export default class App extends Component {
 						return <Ionicons name={iconName} size={25} />;
 					},
 				}}>
-				{(props) => <OrderScreen {...props} username={this.state.username} />}
+				{(props) => <OrdersScreen {...props} username={this.state.username} />}
 			</Tab.Screen>
 		);
 		if (role === 'Admin') {
@@ -62,7 +62,7 @@ export default class App extends Component {
 						},
 					}}>
 					{(props) => (
-						<AdminControls {...props} username={this.state.username} />
+						<UsageReports {...props} username={this.state.username} />
 					)}
 				</Tab.Screen>
 			);
