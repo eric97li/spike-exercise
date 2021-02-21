@@ -1,60 +1,61 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
+import moment from 'moment';
 export default class OrderComponent extends React.Component {
 	compilePDF() {
 		console.log('Compile PDF Functionality Yet to be Implemented');
 	}
 	render() {
 		//replace with props.order eventually
-		let order = [
-			[
-				'12343',
-				'dish1',
-				'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?webp=true&quality=90&resize=620%2C563',
-				'10',
-			],
-			[
-				'12452',
-				'dish2',
-				'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?webp=true&quality=90&resize=620%2C563',
-				'24',
-			],
-		];
+		let order = {
+			'CarDescription': '',
+			'CreatedTime': '2021-02-05 20:28:54',
+			'OrderID': 'JunyuTest2021-02-05',
+			'Status': 'Incomplete',
+			'TimetoPickUp': 'Sun Feb 21 2021 12:16:35 GMT-0500 (EST)',
+			'UserName': 'JunyuTest',
+			'FoodItems': ['dish1', 'dish2'],
+			'TotalCost': '$13.44',
+		};
 		// order.map((foodItem) => {
 		// 	console.log(foodItem[2]);
 		// });
-
+		var d = new Date();
+		<br />;
 		return (
 			<View style={styles.mealcard}>
 				<View style={styles.row}>
-					<Text style={styles.mealtitle}>Ready to be Picked Up!</Text>
+					<Text style={{ fontWeight: '500', fontSize: 20 }}>
+						Status: {order.Status}
+					</Text>
 
 					<TouchableOpacity
 						style={styles.button}
 						title='Compile Receipt'
-						onPress={() => alert('Functionality not implemented')}>
-						<Text>Get Receipt </Text>
+						onPress={() => alert('Receipt functionality not implemented')}>
+						<Text>View Full Receipt </Text>
 					</TouchableOpacity>
 				</View>
+				<Text>Completed: {moment(d).calendar()}</Text>
+				<Text>Cost: {order.TotalCost}</Text>
+				<View style={styles.spaceVertical}></View>
+
+				<Text style={{ fontWeight: '500', fontSize: 16 }}>
+					Some of the items on this meal were:
+				</Text>
 				<View style={styles.row}>
-					{order.map((foodItem) => {
-						return (
-							<View style={styles.foodcard} key={foodItem[0]}>
-								<Text style={{ marginBottom: 5 }}>
-									{foodItem[1]} for ${foodItem[3]}
-								</Text>
-								<Image
-									source={{
-										uri: foodItem[2],
-									}}
-									style={{ width: 100, height: 100, marginBottom: 5 }}
-								/>
-								<TouchableOpacity
-									title='Compile PDF'
-									onPress={this.compilePDF}
-								/>
-							</View>
-						);
+					{order.FoodItems.map((foodItem, index) => {
+						////Only print first few items
+						if (index > 2) return <></>;
+						let returnString = foodItem;
+						if (
+							//Deliminter by comma
+							index != order.FoodItems.length - 1 ||
+							(order.FoodItems.length > 2 && index != 2)
+						) {
+							returnString += ', ';
+						}
+						return <Text>{returnString}</Text>;
 					})}
 				</View>
 			</View>
@@ -84,9 +85,11 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 	},
 	button: {
-		alignItems: 'center',
+		// alignItems: 'center',
 		backgroundColor: '#5EA9F4',
 		padding: 5,
+		position: 'absolute',
+		right: 0,
 	},
 	row: {
 		flexDirection: 'row',
