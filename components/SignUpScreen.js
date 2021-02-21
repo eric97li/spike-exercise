@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, TextInput, View, Text } from 'react-native';
+import {
+	TouchableOpacity,
+	TextInput,
+	StyleSheet,
+	View,
+	Text,
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 export default class SignUp extends Component {
@@ -30,7 +36,7 @@ export default class SignUp extends Component {
 
 		//check that the username is unique
 		return fetch('https://ripple506.herokuapp.com/CreateAccount', {
-			method: 'GET',
+			method: 'POST',
 		})
 			.then((response) => response.json())
 			.then((response) => {
@@ -63,6 +69,8 @@ export default class SignUp extends Component {
 					}).then((response) => {
 						if (response.status == 201) {
 							alert('Profile created');
+							//Navigate to login page
+							this.props.navigation.navigate('Login');
 						}
 						//error
 						else {
@@ -103,7 +111,7 @@ export default class SignUp extends Component {
 				/>
 				<Picker
 					selectedValue={this.state.role}
-					style={{ width: '80%' }}
+					style={styles.onePicker}
 					onValueChange={(itemValue, itemIndex) =>
 						this.setState({ role: itemValue })
 					}>
@@ -129,10 +137,17 @@ export default class SignUp extends Component {
 						<Text style={{ color: 'white' }}> Sign Up </Text>
 					</TouchableOpacity>
 				</View>
-
-				{/* <Text>{this.state.username}</Text>
-              <Text>{this.state.password}</Text> */}
 			</View>
 		);
 	}
 }
+const styles = StyleSheet.create({
+	onePicker: {
+		width: '80%',
+		paddingTop: 0,
+		// height: 44,
+		backgroundColor: '#fff',
+		borderColor: 'black',
+		borderWidth: 1,
+	},
+});
