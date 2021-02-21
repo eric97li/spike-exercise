@@ -15,70 +15,65 @@ export default class SignUp extends Component {
 			username: '',
 			password: '',
 			role: 'Customer',
+			phonenumber: '',
+			address: '',
+			preferredPayment: '',
 		};
 	}
 	signup_field = () => {
-		const { username, password, role } = this.state;
-		if (role === '0') {
-			alert('Select a role other than default');
+		const {
+			username,
+			password,
+			role,
+			phonenumber,
+			address,
+			preferredPayment,
+		} = this.state;
+		if (
+			role === '0' ||
+			!phonenumber.length ||
+			!address ||
+			!preferredPayment ||
+			!username ||
+			!password
+		) {
+			alert('Invalid input');
 			return;
-		}
-		if (username == '') {
-			alert('Username or password missing!');
-			return false;
-		} else if (password == '') {
-			alert('Username or password missing!');
-			return false;
 		} else if (password.length < 5) {
 			alert('Field password must be 5 characters or longer.');
 			return false;
 		}
 
-		//check that the username is unique
-		return fetch('https://ripple506.herokuapp.com/CreateAccount', {
+		const data = {
+			UserName: username,
+			Password: password,
+			Role: role,
+			Phone: phonenumber,
+			Address: address,
+			//payment info to be determine
+		};
+		console.log(JSON.stringify(data));
+
+		return fetch('https://ripple506.herokuapp.com/CreateAccount/', {
 			method: 'POST',
-		})
-			.then((response) => response.json())
-			.then((response) => {
-				// console.log(response[0].name)
-
-				//users begin at id 1
-				//get list of usernames
-				let usernameList = [];
-				for (let i = 1; i < response.length; i++) {
-					usernameList.push(response[i].username);
-				}
-				//check array of usernames
-				//username is already taken
-				if (usernameList.includes(username)) {
-					alert('Username is already taken');
-				}
-				//username is unique, create account
-				else {
-					const data = {
-						username: username,
-						password: password,
-						name: username,
-						role: role,
-					};
-
-					return fetch('https://ripple506.herokuapp.com/CreateAccount', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(data),
-					}).then((response) => {
-						if (response.status == 201) {
-							alert('Profile created');
-							//Navigate to login page
-							this.props.navigation.navigate('Login');
-						}
-						//error
-						else {
-							alert('username already taken!');
-						}
-					});
-				}
-			});
+			headers: {
+				Accept: '*/*',
+				Connection: 'keep-alive',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		}).then((response) => console.log(response));
+		// .then((response) => response.json())
+		// .then((json) => {
+		// 	console.log(json);
+		// 	if (json.status) {
+		// 		alert('Profile created');
+		// 		//Navigate to login page
+		// 		this.props.navigation.navigate('Login');
+		// 	} else {
+		// 		alert('Invalid username. Try another cone.');
+		// 	}
+		// });
 	};
 
 	render() {
@@ -94,7 +89,7 @@ export default class SignUp extends Component {
 				}}>
 				<TextInput
 					autoCapitalize='none'
-					placeholder={'Username'}
+					placeholder={'Username2'}
 					onChangeText={(value) => this.setState({ username: value })}
 					style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
 				/>
@@ -109,6 +104,47 @@ export default class SignUp extends Component {
 						marginTop: '5%',
 					}}
 				/>
+				<TextInput
+					autoCapitalize='none'
+					placeholder={'555-5555'}
+					onChangeText={(value) => this.setState({ phonenumber: value })}
+					style={{
+						height: 42,
+						width: '80%',
+						borderBottomWidth: 1,
+						marginTop: '5%',
+					}}
+				/>
+				<TextInput
+					autoCapitalize='none'
+					placeholder={'10 First Avenue'}
+					onChangeText={(value) => this.setState({ address: value })}
+					style={{
+						height: 42,
+						width: '80%',
+						borderBottomWidth: 1,
+						marginTop: '5%',
+					}}
+				/>
+				<TextInput
+					autoCapitalize='none'
+					placeholder={'Apple Pay'}
+					onChangeText={(value) => this.setState({ preferredPayment: value })}
+					style={{
+						height: 42,
+						width: '80%',
+						borderBottomWidth: 1,
+						marginTop: '5%',
+					}}
+				/>
+				{/* 
+
+				<TextInput
+					placeholderTextColor='#5EA9F4'
+					style={styles.input}
+					onChangeText={(text) => this.setState({ preferredPayment: text })}
+					placeholder={'Apple Pay'}
+				/> */}
 				<Picker
 					selectedValue={this.state.role}
 					style={styles.onePicker}
