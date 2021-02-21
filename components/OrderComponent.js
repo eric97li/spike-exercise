@@ -26,7 +26,16 @@ export default class OrderComponent extends React.Component {
 
 		return (
 			<View style={styles.mealcard}>
-				<Text style={styles.mealtitle}>Ready to be Picked Up!</Text>
+				<View style={styles.row}>
+					<Text style={styles.mealtitle}>Ready to be Picked Up!</Text>
+
+					<TouchableOpacity
+						style={styles.button}
+						title='Compile Receipt'
+						onPress={() => alert('Functionality not implemented')}>
+						<Text>Get Receipt </Text>
+					</TouchableOpacity>
+				</View>
 				<View style={styles.row}>
 					{order.map((foodItem) => {
 						return (
@@ -73,6 +82,11 @@ const styles = StyleSheet.create({
 		marginTop: 7,
 		borderColor: '#5EA9F4',
 		borderWidth: 2,
+	},
+	button: {
+		alignItems: 'center',
+		backgroundColor: '#5EA9F4',
+		padding: 5,
 	},
 	row: {
 		flexDirection: 'row',

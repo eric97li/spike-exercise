@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, TextInput, View, Text } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 export default class SignUp extends Component {
 	constructor(props) {
@@ -7,12 +8,15 @@ export default class SignUp extends Component {
 		this.state = {
 			username: '',
 			password: '',
+			role: 'Customer',
 		};
 	}
-
 	signup_field = () => {
-		const { username, password } = this.state;
-
+		const { username, password, role } = this.state;
+		if (role === '0') {
+			alert('Select a role other than default');
+			return;
+		}
 		if (username == '') {
 			alert('Username or password missing!');
 			return false;
@@ -49,6 +53,7 @@ export default class SignUp extends Component {
 						username: username,
 						password: password,
 						name: username,
+						role: role,
 					};
 
 					return fetch('https://ripple506.herokuapp.com/CreateAccount', {
@@ -80,11 +85,13 @@ export default class SignUp extends Component {
 					alignItems: 'center',
 				}}>
 				<TextInput
+					autoCapitalize='none'
 					placeholder={'Username'}
 					onChangeText={(value) => this.setState({ username: value })}
 					style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
 				/>
 				<TextInput
+					autoCapitalize='none'
 					placeholder={'Password'}
 					onChangeText={(value) => this.setState({ password: value })}
 					style={{
@@ -94,6 +101,17 @@ export default class SignUp extends Component {
 						marginTop: '5%',
 					}}
 				/>
+				<Picker
+					selectedValue={this.state.role}
+					style={{ width: '80%' }}
+					onValueChange={(itemValue, itemIndex) =>
+						this.setState({ role: itemValue })
+					}>
+					<Picker.Item label='Please select a role' value='0' />
+					<Picker.Item label='Customer' value='Customer' />
+					<Picker.Item label='Restaurant Staff' value='Staff' />
+					<Picker.Item label='Admin' value='Admin' />
+				</Picker>
 				<View style={{ marginTop: '10%', width: '80%' }}>
 					<TouchableOpacity
 						style={{

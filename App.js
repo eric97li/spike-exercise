@@ -109,17 +109,24 @@ export default class App extends Component {
 				<Stack.Navigator>
 					{/* Temporarily Commented Out to avoid login functionality */}
 
-					{/* <Stack.Screen 
-          name = "Login"
-          options={{title: 'Badger Bytes'}}
-        >
-          {props => <Login {...props} setUsernameCallBack={this.setUsername} setPasswordCallBack={this.setPassword}/>}
-          </Stack.Screen>
-        <Stack.Screen 
-          name="Sign Up"
-        >
-          {props => <SignUp {...props} setUsernameCallBack={this.setUsername} setPasswordCallBack={this.setPassword}/>} 
-        </Stack.Screen> */}
+					<Stack.Screen name='Login' options={{ title: 'Badger Bytes' }}>
+						{(props) => (
+							<LoginScreen
+								{...props}
+								setUsernameCallBack={this.setUsername}
+								setPasswordCallBack={this.setPassword}
+							/>
+						)}
+					</Stack.Screen>
+					<Stack.Screen name='Sign Up'>
+						{(props) => (
+							<SignUpScreen
+								{...props}
+								setUsernameCallBack={this.setUsername}
+								setPasswordCallBack={this.setPassword}
+							/>
+						)}
+					</Stack.Screen>
 					<Stack.Screen name='Badger Bytes'>
 						{(props) => this.createTabNavigator(props)}
 					</Stack.Screen>

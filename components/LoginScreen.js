@@ -22,45 +22,49 @@ export default class Login extends Component {
 		}
 
 		//check for the credentials entered by user with the api and retrieve account of user
-		return fetch('https://ripple506.herokuapp.com/VerifyAccount', {
-			method: 'GET',
-		})
-			.then((response) => response.json())
-			.then((response) => {
-				// console.log(response[0].name)
+		return (
+			fetch('https://ripple506.herokuapp.com/VerifyAccount', {
+				method: 'GET',
+			})
+				// .then((response) => response.json())
+				.then((response) => console.log(response))
 
-				//only the initial api placeholder parameters index 0
-				if (response.length == 1) {
-					alert('Username entered does not match any account');
-				}
+				.then((response) => {
+					// console.log(response[0].name)
 
-				//users begin at id 1
-
-				for (let i = 1; i < response.length; i++) {
-					// console.log(response[i].username)
-					// console.log(response[i].password)
-					if (
-						response[i].username == username &&
-						response[i].password == password
-					) {
-						this.props.setUsernameCallBack(username);
-						this.props.setPasswordCallBack(password);
-						this.props.navigation.navigate('Badger Bytes');
-						break;
-					}
-					//incorrect password
-					else if (
-						response[i].username == username &&
-						response[i].password != password
-					) {
-						alert('Incorrect password');
-					}
-					//if by the end of the check no username matches then username doesn't exist
-					if (response[i].username != username && i == response.length - 1) {
+					//only the initial api placeholder parameters index 0
+					if (response.length == 1) {
 						alert('Username entered does not match any account');
 					}
-				}
-			});
+
+					//users begin at id 1
+
+					for (let i = 1; i < response.length; i++) {
+						// console.log(response[i].username)
+						// console.log(response[i].password)
+						if (
+							response[i].username == username &&
+							response[i].password == password
+						) {
+							this.props.setUsernameCallBack(username);
+							this.props.setPasswordCallBack(password);
+							this.props.navigation.navigate('Badger Bytes');
+							break;
+						}
+						//incorrect password
+						else if (
+							response[i].username == username &&
+							response[i].password != password
+						) {
+							alert('Incorrect password');
+						}
+						//if by the end of the check no username matches then username doesn't exist
+						if (response[i].username != username && i == response.length - 1) {
+							alert('Username entered does not match any account');
+						}
+					}
+				})
+		);
 	};
 
 	goToSignUp() {
@@ -79,11 +83,13 @@ export default class Login extends Component {
 					alignItems: 'center',
 				}}>
 				<TextInput
+					autoCapitalize='none'
 					placeholder={'Username'}
 					onChangeText={(value) => this.setState({ username: value })}
 					style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
 				/>
 				<TextInput
+					autoCapitalize='none'
 					placeholder={'Password'}
 					onChangeText={(value) => this.setState({ password: value })}
 					style={{
