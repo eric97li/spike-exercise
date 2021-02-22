@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, TextInput, View, Text } from 'react-native';
+import { withNavigationFocus } from 'react-navigation';
 
-export default class Login extends Component {
+class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			username: '',
 			password: '',
 		};
+	}
+
+	//Allows us to reset stack title
+	componentDidMount() {
+		this._unsubscribe = this.props.navigation.addListener('focus', () => {
+			// console.log('focused');
+			this.props.setUsernameCallBack('');
+			this.props.setPasswordCallBack('');
+			// do something
+		});
+	}
+
+	componentWillUnmount() {
+		this._unsubscribe();
 	}
 
 	validate_field = () => {
@@ -20,7 +35,7 @@ export default class Login extends Component {
 			alert('Username or password is incorrect!');
 			return false;
 		}
-		console.log(JSON.stringify({ UserName: username, PassWord: password }));
+		// console.log(JSON.stringify({ UserName: username, PassWord: password }));
 		//check for the credentials entered by user with the api and retrieve account of user
 		fetch('https://ripple506.herokuapp.com/VerifyAccount', {
 			method: 'POST',
@@ -34,11 +49,12 @@ export default class Login extends Component {
 			// .then((response) => response.json())
 			.then((response) => response.json())
 
-			.then((json) => {
+			.then(async (json) => {
 				console.log(json);
 				if (json.Status) {
 					this.props.setUsernameCallBack(username);
 					this.props.setPasswordCallBack(password);
+					await this.setState({ username: '', password: '' });
 					this.props.navigation.navigate('Badger Bytes');
 				} else {
 					alert('Error logging in!');
@@ -126,3 +142,4 @@ export default class Login extends Component {
 		);
 	}
 }
+export default withNavigationFocus(Login);

@@ -26,7 +26,11 @@ export default class App extends Component {
 		this.setUsername = this.setUsername.bind(this);
 		this.setPassword = this.setPassword.bind(this);
 	}
-
+	getStackTitle() {
+		if (!this.state.username) {
+			return 'Login';
+		} else return 'Logout';
+	}
 	setUsername(y) {
 		this.setState({ username: y });
 	}
@@ -109,7 +113,7 @@ export default class App extends Component {
 				<Stack.Navigator>
 					{/* Temporarily Commented Out to avoid login functionality */}
 
-					<Stack.Screen name='Login' options={{ title: 'Badger Bytes' }}>
+					<Stack.Screen name='Login' options={{ title: this.getStackTitle() }}>
 						{(props) => (
 							<LoginScreen
 								{...props}
