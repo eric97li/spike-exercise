@@ -109,7 +109,7 @@ export default class App extends Component {
 				<Stack.Navigator>
 					{/* Temporarily Commented Out to avoid login functionality */}
 
-					{/* <Stack.Screen name='Login' options={{ title: 'Badger Bytes' }}>
+					<Stack.Screen name='Login' options={{ title: 'Badger Bytes' }}>
 						{(props) => (
 							<LoginScreen
 								{...props}
@@ -126,7 +126,7 @@ export default class App extends Component {
 								setPasswordCallBack={this.setPassword}
 							/>
 						)}
-					</Stack.Screen> */}
+					</Stack.Screen>
 					<Stack.Screen name='Badger Bytes'>
 						{(props) => this.createTabNavigator(props)}
 					</Stack.Screen>
