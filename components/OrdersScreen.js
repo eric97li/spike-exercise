@@ -15,25 +15,34 @@ export default class OrdersScreen extends Component {
 
 	componentDidMount() {
 		this._unsubscribe = this.props.navigation.addListener('focus', () => {
-			fetch('https://ripple506.herokuapp.com/GetOrderHistory', {
-				method: 'POST',
-				headers: {
-					'Accept': '*/*',
-					'Connection': 'Keep-Alive',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ UserName: 'JunyuTest' }),
-			})
-				// .then((response) => response.json())
-				.then((response) => response.json())
-
-				.then(async (json) => {
-					this.setState({ orders: json });
-					console.log(json);
-					if (json.Status) {
-					}
-				});
+			this.fetchData();
 		});
+	}
+	componentWillUnmount() {
+		this._unsubscribe();
+	}
+	// orderCallback() {
+	// 	this.fetchData();
+	// }
+	fetchData() {
+		fetch('https://ripple506.herokuapp.com/GetOrderHistory', {
+			method: 'POST',
+			headers: {
+				'Accept': '*/*',
+				'Connection': 'Keep-Alive',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ UserName: 'JunyuTest' }),
+		})
+			// .then((response) => response.json())
+			.then((response) => response.json())
+
+			.then(async (json) => {
+				this.setState({ orders: json });
+				// console.log(json);
+				if (json.Status) {
+				}
+			});
 	}
 
 	getOrderItems() {
@@ -41,11 +50,14 @@ export default class OrdersScreen extends Component {
 		let props = ['DUMMYDATA'];
 		let orderComponents = [];
 		for (let i = 0; i < orders.length; i++) {
-			console.log(orders[i]);
+			// console.log(i);
+			// console.log(orders[i]);
 			orderComponents.push(
 				<OrderComponent
+					orderCallback={() => this.fetchData()}
 					key={i}
-					OrderId={orders[i].OrderID}
+					dataKey={i}
+					OrderID={orders[i].OrderID}
 					TimetoPickUp={orders[i].TimetoPickUp}
 					TotalCost={orders[i].TotalCost}
 					Status={orders[i].Status}

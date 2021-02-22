@@ -21,121 +21,170 @@ export default class OrderComponent extends React.Component {
 			timemodal: false,
 			oldcar: '',
 			newcar: '',
-			pickuptime: '',
+			TimetoPickUp: '',
 		};
-		// this.onChange = this.onChange.bind(this);
 	}
-	handleConfirm(car) {
-		if (car === undefined) {
-			alert('No Car Description.');
-		} else {
-			this.setState({ carmodal: true, car: car });
-		}
-	}
-
 	compilePDF() {
 		console.log('Compile PDF Functionality Yet to be Implemented');
 	}
-	handleTimeChange(time) {
-		this.setState({ pickuptime: time, timemodal: false });
+	changeTimetoPickUp(time) {
+		// console.log(time);
+		if (time < new Date()) {
+			alert('Invalid Date. Pick a time after today.');
+		}
+		// else if (this.props.Status === 'Incomplete') {
+		// 	alert("Order is not completed yet. Can't pickup order yet.");
+		// }
+		else {
+			this.setState({ TimetoPickUp: time, timemodal: false });
+			console.log(
+				JSON.stringify({ OrderID: this.props.OrderID, TimetoPickUp: time })
+			);
+			//Make fetch call
+			fetch('https://ripple506.herokuapp.com/AddPickUpInfo', {
+				method: 'POST',
+				headers: {
+					'Accept': '*/*',
+					'Connection': 'Keep-Alive',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					OrderID: this.props.OrderID,
+					TimetoPickUp: time,
+				}),
+			})
+				.then((response) => response.json())
+				.then(async (json) => {
+					if (json.Status) {
+						alert('Successfully Updated Pickup Time');
+						this.props.orderCallback();
+					}
+				});
+		}
+	}
+	changeCar(car) {
+		if (car === undefined) {
+			alert('No Car Description.');
+			return;
+		} else {
+			this.setState({ carmodal: false, car: car });
+		}
+		console.log(
+			JSON.stringify({ OrderID: this.props.OrderID, CarDescription: car })
+		);
+		//Make fetch call
+		fetch('https://ripple506.herokuapp.com/AddPickUpInfo', {
+			method: 'POST',
+			headers: {
+				'Accept': '*/*',
+				'Connection': 'Keep-Alive',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				OrderID: this.props.OrderID,
+				CarDescription: car,
+			}),
+		})
+			.then((response) => response.json())
+			.then(async (json) => {
+				if (json.Status) {
+					alert('Successfully Updated Car Description Time');
+					this.props.orderCallback();
+				}
+			});
 	}
 	render() {
 		//replace with props.order eventually
-		// let order = {
-		// 	'CarDescription': '',
-		// 	'CreatedTime': '2021-02-05 20:28:54',
-		// 	'OrderID': 'JunyuTest2021-02-05',
-		// 	'Status': 'Incomplete',
-		// 	'TimetoPickUp': 'Sun Feb 21 2021 12:16:35 GMT-0500 (EST)',
-		// 	'UserName': 'JunyuTest',
-		// 	'FoodItems': ['dish1', 'dish2'],
-		// 	'TotalCost': '$13.44',
-		// };
-		const order = this.props;
-		console.log(this.props);
 
-		console.log(order);
-		var d = new Date();
-		let pickupInfo = (
+		const order = this.props;
+
+		let pickuptime = '';
+		if (order.TimetoPickUp !== '') {
+			pickuptime = moment(order.TimetoPickUp).calendar();
+			console.log(moment(order.TimetoPickUp).calendar());
+		}
+
+		let timemodal = (
 			<DateTimePickerModal
 				isVisible={this.state.timemodal}
 				mode='time'
 				headerTextIOS='Choose a pickup time'
-				onConfirm={(time) => this.handleTimeChange(time)}
+				onConfirm={(time) => this.changeTimetoPickUp(time)}
 				onCancel={() => this.setState({ timemodal: false })}
 			/>
 		);
-		let modal = (
+		let carmodal = (
 			<DialogInput
 				isDialogVisible={this.state.carmodal}
 				title={'Enter Car Description'}
 				message={'Help us identify you for picking up food'}
 				hintInput={order.CarDescription}
 				submitInput={(inputText) => {
-					this.handleConfirm(inputText);
+					this.changeCar(inputText);
 				}}
 				closeDialog={() => this.setState({ carmodal: false })}></DialogInput>
 		);
 		return (
 			<View style={styles.mealcard}>
+				{carmodal}
+				{timemodal}
 				<View style={styles.row}>
 					<Text style={{ fontWeight: '500', fontSize: 20 }}>
 						Status: {order.Status}
 					</Text>
-
 					<TouchableOpacity
-						style={styles.button}
-						title='Compile Receipt'
-						onPress={() => alert('Receipt functionality not implemented')}>
-						<Text>View Full Receipt </Text>
+						title='Update Pickup Time'
+						style={styles.buttonright}
+						onPress={() => this.setState({ timemodal: true })}>
+						<Text>Update Pickup Time </Text>
 					</TouchableOpacity>
-
-					{modal}
 				</View>
 				<View style={styles.row}>
-					<View>
-						<Text style={{ fontWeight: '400', fontSize: 16 }}>
-							Pick up Time:
-						</Text>
-						<Text>{moment(d).calendar()}</Text>
-						{pickupInfo}
-					</View>
-					<View>
-						<Button
-							title='Update Car'
-							style={styles.button}
-							onPress={() => this.setState({ carmodal: true })}
-						/>
-						<Button
-							title='Update Pickup Time'
-							style={styles.button}
-							onPress={() => this.setState({ timemodal: true })}
-						/>
-					</View>
+					<Text style={{ fontWeight: '400', fontSize: 16 }}>
+						Pick up Time: {pickuptime}
+					</Text>
 				</View>
 
 				<View style={styles.row}>
 					<Text>Cost: {order.TotalCost}</Text>
 				</View>
+				<View style={styles.row}>
+					<Text>Picking up in a: {order.CarDescription}</Text>
+					<TouchableOpacity
+						style={styles.buttonright}
+						title='Change Car'
+						onPress={() => this.setState({ carmodal: true })}>
+						<Text>Change Car </Text>
+					</TouchableOpacity>
+				</View>
+
 				<View style={styles.spaceVertical}></View>
 				<Text style={{ fontWeight: '500', fontSize: 16 }}>
 					Some of the items on this meal were:
 				</Text>
 				<View style={styles.row}>
-					{order.FoodItems.map((foodItem, index) => {
-						////Only print first few items
-						if (index > 2) return <></>;
-						let returnString = foodItem;
-						if (
-							//Deliminter by comma
-							index != order.FoodItems.length - 1 ||
-							(order.FoodItems.length > 2 && index != 2)
-						) {
-							returnString += ', ';
-						}
-						return <Text key={index}>{returnString}</Text>;
-					})}
+					<Text>
+						{order.FoodItems.map((foodItem, index) => {
+							////Only print first few items
+							if (index > 2) return '';
+							let returnString = foodItem;
+							if (
+								//Deliminter by comma
+								index != 2 &&
+								index != order.FoodItems.length - 1
+							) {
+								returnString += ', ';
+							}
+							return returnString + ' ';
+						})}
+					</Text>
 				</View>
+				<TouchableOpacity
+					style={styles.button}
+					title='Compile Receipt'
+					onPress={() => alert('Receipt functionality not implemented')}>
+					<Text>View Full Receipt </Text>
+				</TouchableOpacity>
 			</View>
 		);
 	}
@@ -162,15 +211,39 @@ const styles = StyleSheet.create({
 		borderColor: '#5EA9F4',
 		borderWidth: 2,
 	},
-	button: {
+	buttonright: {
 		// alignItems: 'center',
 		backgroundColor: '#5EA9F4',
 		padding: 5,
 		position: 'absolute',
+		alignItems: 'center', // Centered horizontally
+		justifyContent: 'center', //Centered vertically
+
 		right: 0,
+	},
+	button: {
+		justifyContent: 'center',
+		alignItems: 'center', // Centered horizontally
+		justifyContent: 'center', //Centered vertically
+
+		// alignItems: 'center',
+		backgroundColor: '#5EA9F4',
+		padding: 5,
+	},
+	buttonleft: {
+		// alignItems: 'center',
+		backgroundColor: '#5EA9F4',
+		padding: 5,
+		alignItems: 'center', // Centered horizontally
+		justifyContent: 'center', //Centered vertically
+
+		// position: 'absolute',
+		// left: 0,
+		width: '50%',
 	},
 	row: {
 		flexDirection: 'row',
+		paddingBottom: 10,
 	},
 	spaceVertical: {
 		height: 15,

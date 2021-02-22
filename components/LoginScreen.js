@@ -22,7 +22,7 @@ class LoginScreen extends Component {
 	}
 
 	componentWillUnmount() {
-		// this._unsubscribe();
+		this._unsubscribe();
 	}
 
 	validate_field = () => {
