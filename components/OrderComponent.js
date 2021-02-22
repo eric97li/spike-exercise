@@ -11,39 +11,44 @@ import React from 'react';
 import moment from 'moment';
 import DialogInput from 'react-native-dialog-input';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export default class OrderComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modalvisible: false,
+			carmodal: false,
+			timemodal: false,
 			oldcar: '',
 			newcar: '',
 			pickuptime: '',
-			mode: 'time',
 		};
-		this.onChange = this.onChange.bind(this);
+		// this.onChange = this.onChange.bind(this);
 	}
 	handleConfirm(car) {
 		if (car === undefined) {
 			alert('No Car Description.');
 		} else {
-			this.setState({ modalvisible: true, car: car });
+			this.setState({ carmodal: true, car: car });
 		}
 	}
-	onChange(event, selectedDate) {
-		this.setState(
-			{
-				date: selectedDate,
-			} /*() => console.log(this.state.date.toLocaleString()), () => console.log(this.state.date)*/
-		);
-	}
-	formattedDate() {
-		var formattedDate = new Date(this.state.date);
-		return formattedDate;
-	}
+	// onChange(event, selectedDate) {
+	// 	this.setState(
+	// 		{
+	// 			date: selectedDate,
+	// 		} /*() => console.log(this.state.date.toLocaleString()), () => console.log(this.state.date)*/
+	// 	);
+	// }
+	// formattedDate() {
+	// 	var formattedDate = new Date(this.state.date);
+	// 	return formattedDate;
+	// }
+
 	compilePDF() {
 		console.log('Compile PDF Functionality Yet to be Implemented');
+	}
+	handleTimeChange(time) {
+		this.setState({ pickuptime: time, timemodal: false });
 	}
 	render() {
 		//replace with props.order eventually
@@ -57,43 +62,27 @@ export default class OrderComponent extends React.Component {
 			'FoodItems': ['dish1', 'dish2'],
 			'TotalCost': '$13.44',
 		};
-		// order.map((foodItem) => {
-		// 	console.log(foodItem[2]);
-		// });
+
 		var d = new Date();
 		let pickupInfo = (
-			<DateTimePicker
-				style={styles.timeinput}
-				testID='dateTimePicker'
-				value={this.formattedDate}
-				mode={this.state.mode}
-				is24Hour={true}
-				display='default'
-				onChange={this.onChange}
+			<DateTimePickerModal
+				isVisible={this.state.timemodal}
+				mode='time'
+				headerTextIOS='Choose a pickup time'
+				onConfirm={(time) => this.handleTimeChange(time)}
+				onCancel={() => this.setState({ timemodal: false })}
 			/>
 		);
-		// if (order.Status === 'Incomplete') {
-		// 	pickupInfo = (
-		// 		<TextInput
-		// 			placeholderTextColor='#5EA9F4'
-		// 			style={styles.input}
-		// 			onChangeText={(text) => this.setState({ car: text })}
-		// 			placeholder={'Update Car Description'}
-		// 		/>
-		// 	);
-		// }
 		let modal = (
 			<DialogInput
-				isDialogVisible={this.state.modalvisible}
+				isDialogVisible={this.state.carmodal}
 				title={'Enter Car Description'}
 				message={'Help us identify you for picking up food'}
 				hintInput={'Blue Ford Focus'}
 				submitInput={(inputText) => {
 					this.handleConfirm(inputText);
 				}}
-				closeDialog={() =>
-					this.setState({ modalvisible: false })
-				}></DialogInput>
+				closeDialog={() => this.setState({ carmodal: false })}></DialogInput>
 		);
 		return (
 			<View style={styles.mealcard}>
@@ -112,15 +101,26 @@ export default class OrderComponent extends React.Component {
 					{modal}
 				</View>
 				<View style={styles.row}>
-					{/* {' '} */}
-					<Text>Pick up Time: {moment(d).calendar()}</Text>
-					<Button
-						title='Update Car'
-						style={styles.button}
-						onPress={() => this.setState({ modalvisible: true })}
-					/>
+					<View>
+						<Text style={{ fontWeight: '400', fontSize: 16 }}>
+							Pick up Time:
+						</Text>
+						<Text>{moment(d).calendar()}</Text>
+						{pickupInfo}
+					</View>
+					<View>
+						<Button
+							title='Update Car'
+							style={styles.button}
+							onPress={() => this.setState({ carmodal: true })}
+						/>
+						<Button
+							title='Update Pickup Time'
+							style={styles.button}
+							onPress={() => this.setState({ timemodal: true })}
+						/>
+					</View>
 				</View>
-				{pickupInfo}
 
 				<View style={styles.row}>
 					<Text>Cost: {order.TotalCost}</Text>
