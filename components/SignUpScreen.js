@@ -52,13 +52,19 @@ export default class SignUp extends Component {
 			Address: address,
 			//payment info to be determine
 		};
+		// const data = {
+		// 	'UserName': 'Titus',
+		// 	'Password': 'feafaef',
+		// 	'Role': 'Customer',
+		// 	'Phone': 'feafae',
+		// 	'Address': 'feafa',
+		// };
 		console.log(JSON.stringify(data));
-
-		return fetch('https://ripple506.herokuapp.com/CreateAccount/', {
+		fetch('https://ripple506.herokuapp.com/CreateAccount/', {
 			method: 'POST',
 			headers: {
-				Accept: '*/*',
-				Connection: 'keep-alive',
+				'Accept': '*/*',
+				'Connection': 'Keep-Alive',
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(data),

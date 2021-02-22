@@ -13,7 +13,7 @@ export default class OrdersScreen extends Component {
 		let props = ['DUMMYDATA'];
 		let orders = [];
 		for (let i = 0; i < props.length; i++) {
-			orders.push(<OrderComponent />);
+			orders.push(<OrderComponent key={i} />);
 		}
 		return orders;
 	}

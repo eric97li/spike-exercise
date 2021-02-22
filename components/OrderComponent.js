@@ -1,7 +1,20 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+	StyleSheet,
+	View,
+	Text,
+	Image,
+	TextInput,
+	TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import moment from 'moment';
+import Dialog from 'react-native-dialog';
+
 export default class OrderComponent extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { modalvisible: false, car: '', pickuptime: '' };
+	}
 	compilePDF() {
 		console.log('Compile PDF Functionality Yet to be Implemented');
 	}
@@ -21,7 +34,30 @@ export default class OrderComponent extends React.Component {
 		// 	console.log(foodItem[2]);
 		// });
 		var d = new Date();
-		<br />;
+		let pickupInfo;
+		if (order.Status === 'Incomplete') {
+			pickupInfo = (
+				<TextInput
+					placeholderTextColor='#5EA9F4'
+					style={styles.input}
+					onChangeText={(text) => this.setState({ car: text })}
+					placeholder={'Update Car Description'}
+				/>
+			);
+		}
+		// let modal = (
+		// 	<View>
+		// 		<Dialog.Container visible={this.state.modalvisible}>
+		// 			<Dialog.Title>Account delete</Dialog.Title>
+		// 			<Dialog.Description>
+		// 				Do you want to delete this account? You cannot undo this action.
+		// 			</Dialog.Description>
+		// 			<Dialog.Input></Dialog.Input>
+		// 			<Dialog.Button label='Cancel' />
+		// 			<Dialog.Button label='Delete' />
+		// 		</Dialog.Container>
+		// 	</View>
+		// );
 		return (
 			<View style={styles.mealcard}>
 				<View style={styles.row}>
@@ -36,7 +72,12 @@ export default class OrderComponent extends React.Component {
 						<Text>View Full Receipt </Text>
 					</TouchableOpacity>
 				</View>
-				<Text>Completed: {moment(d).calendar()}</Text>
+				<View style={styles.row}>
+					{/* {' '} */}
+					<Text>Completed: {moment(d).calendar()}</Text>
+					{/* {pickupInfo} */}
+				</View>
+
 				<Text>Cost: {order.TotalCost}</Text>
 				<View style={styles.spaceVertical}></View>
 
@@ -55,7 +96,7 @@ export default class OrderComponent extends React.Component {
 						) {
 							returnString += ', ';
 						}
-						return <Text>{returnString}</Text>;
+						return <Text key={index}>{returnString}</Text>;
 					})}
 				</View>
 			</View>
@@ -96,5 +137,13 @@ const styles = StyleSheet.create({
 	},
 	spaceVertical: {
 		height: 15,
+	},
+	input: {
+		width: 200,
+		padding: 10,
+		margin: 5,
+		height: 40,
+		borderColor: '#5EA9F4',
+		borderWidth: 1,
 	},
 });
