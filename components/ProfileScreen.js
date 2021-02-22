@@ -12,18 +12,90 @@ export default class ProfileScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			firstName: '',
-			lastName: '',
-			password: '',
-			phonenumber: '',
-			address: '',
-			preferredPayment: '',
+			PassWord: '',
+			Phone: '',
+			Address: '',
+			PaymentType: '',
 		};
 		this.updateProfile = this.updateProfile.bind(this);
+		this.phoneInput = React.createRef();
+		this.passInput = React.createRef();
+		this.paymentInput = React.createRef();
+		this.addressInput = React.createRef();
+		// this.userInput = React.createRef();
+	}
+	//Allows us to reset stack title
+	componentDidMount() {
+		this._unsubscribe = this.props.navigation.addListener('focus', () => {
+			fetch('https://ripple506.herokuapp.com/GetAccountInfo', {
+				method: 'POST',
+				headers: {
+					'Accept': '*/*',
+					'Connection': 'Keep-Alive',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ UserName: this.props.username }),
+			})
+				// .then((response) => response.json())
+				.then((response) => response.json())
+
+				.then(async (json) => {
+					console.log(json);
+					if (json.Status) {
+						this.setState({
+							UserName: json.UserName,
+							PassWord: json.PassWord,
+							Phone: json.Phone,
+							Address: json.Address,
+							PaymentType: json.PaymentType,
+						});
+					}
+				});
+		});
 	}
 
-	componentDidMount() {}
-	updateProfile() {}
+	componentWillUnmount() {
+		this._unsubscribe();
+	}
+
+	updateProfile() {
+		console.log(
+			JSON.stringify({
+				UserName: this.props.UserName,
+				PassWord: this.state.PassWord,
+				Phone: this.state.Phone,
+				Address: this.state.Address,
+				PaymentType: this.state.PaymentType,
+			})
+		);
+		fetch('https://ripple506.herokuapp.com/UpdateAccount', {
+			method: 'POST',
+			headers: {
+				'Accept': '*/*',
+				'Connection': 'Keep-Alive',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				UserName: this.props.username,
+				PassWord: this.state.PassWord,
+				Phone: this.state.Phone,
+				Address: this.state.Address,
+				PaymentType: this.state.PaymentType,
+			}),
+		})
+			// .then((response) => response.json())
+			.then((response) => response.json())
+
+			.then(async (json) => {
+				console.log(json);
+			});
+		this.phoneInput.current.value = '';
+		this.passInput.current.value = '';
+		this.addressInput.current.value = '';
+		this.paymentInput.current.value = '';
+		// this.userInput.current.value = '';
+	}
+
 	render() {
 		return (
 			<React.Fragment>
@@ -42,44 +114,49 @@ export default class ProfileScreen extends Component {
 					<Text style={{ fontSize: 20 }}>Update Your Account Info Below</Text>
 					<View style={{ height: 50 }}></View>
 
-					<Text>First Name</Text>
+					{/* <Text>Username</Text>
 					<TextInput
+						ref={this.userInput}
 						placeholderTextColor='#5EA9F4'
 						style={styles.input}
-						onChangeText={(text) => this.setState({ firstName: text })}
-						placeholder={'Titus'}
-					/>
-
-					<Text>Last Name</Text>
+						onChangeText={(text) => this.setState({ UserName: text })}
+						placeholder={this.state.UserName}
+					/> */}
+					<Text>Password</Text>
 					<TextInput
+						ref={this.passInput}
+						// secureTextEntry={true}
 						placeholderTextColor='#5EA9F4'
 						style={styles.input}
-						onChangeText={(text) => this.setState({ lastName: text })}
-						placeholder={'Smith'}
+						onChangeText={(text) => this.setState({ PassWord: text })}
+						placeholder={this.props.password}
 					/>
 
 					<Text>Phone Number</Text>
 					<TextInput
+						ref={this.phoneInput}
 						placeholderTextColor='#5EA9F4'
 						style={styles.input}
-						onChangeText={(text) => this.setState({ phonenumber: text })}
-						placeholder={'555-5555'}
+						onChangeText={(text) => this.setState({ Phone: text })}
+						placeholder={this.state.Phone}
 					/>
 
 					<Text>Address</Text>
 					<TextInput
+						ref={this.addressInput}
 						placeholderTextColor='#5EA9F4'
 						style={styles.input}
-						onChangeText={(text) => this.setState({ address: text })}
-						placeholder={'1800 Pennslyvania Avenue'}
+						onChangeText={(text) => this.setState({ Address: text })}
+						placeholder={this.state.Address}
 					/>
 
 					<Text>Preferred Payment</Text>
 					<TextInput
+						ref={this.paymentInput}
 						placeholderTextColor='#5EA9F4'
 						style={styles.input}
-						onChangeText={(text) => this.setState({ preferredPayment: text })}
-						placeholder={'Apple Pay'}
+						onChangeText={(text) => this.setState({ PaymentType: text })}
+						placeholder={this.state.PaymentType}
 					/>
 
 					{/* Can't modify role */}
@@ -89,7 +166,7 @@ export default class ProfileScreen extends Component {
 							style={styles.button}
 							title='Save Information'
 							// onPress={this.updateProfile}
-							onPress={() => alert('Functionality not implemented')}>
+							onPress={this.updateProfile}>
 							<Text> Confirm </Text>
 						</TouchableOpacity>
 					</View>

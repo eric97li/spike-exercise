@@ -97,13 +97,14 @@ export default class SignUp extends Component {
 				}}>
 				<TextInput
 					autoCapitalize='none'
-					placeholder={'Username2'}
+					placeholder={'Username'}
 					onChangeText={(value) => this.setState({ username: value })}
 					style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
 				/>
 				<TextInput
 					autoCapitalize='none'
 					placeholder={'Password'}
+					secureTextEntry={true}
 					onChangeText={(value) => this.setState({ password: value })}
 					style={{
 						height: 42,

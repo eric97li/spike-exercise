@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { TouchableOpacity, TextInput, View, Text } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 
-class Login extends Component {
+class LoginScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: '',
-			password: '',
+			UserName: '',
+			PassWord: '',
 		};
 	}
 
@@ -22,20 +22,20 @@ class Login extends Component {
 	}
 
 	componentWillUnmount() {
-		this._unsubscribe();
+		// this._unsubscribe();
 	}
 
 	validate_field = () => {
-		const { username, password } = this.state;
+		const { UserName, PassWord } = this.state;
 
-		if (username == '') {
-			alert('Username or password is incorrect!');
+		if (UserName == '') {
+			alert('UserName or PassWord is incorrect!');
 			return false;
-		} else if (password == '') {
-			alert('Username or password is incorrect!');
+		} else if (PassWord == '') {
+			alert('UserName or PassWord is incorrect!');
 			return false;
 		}
-		// console.log(JSON.stringify({ UserName: username, PassWord: password }));
+		// console.log(JSON.stringify({ UserName: UserName, PassWord: PassWord }));
 		//check for the credentials entered by user with the api and retrieve account of user
 		fetch('https://ripple506.herokuapp.com/VerifyAccount', {
 			method: 'POST',
@@ -44,7 +44,7 @@ class Login extends Component {
 				'Connection': 'Keep-Alive',
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ UserName: username, PassWord: password }),
+			body: JSON.stringify({ UserName: UserName, PassWord: PassWord }),
 		})
 			// .then((response) => response.json())
 			.then((response) => response.json())
@@ -52,9 +52,9 @@ class Login extends Component {
 			.then(async (json) => {
 				console.log(json);
 				if (json.Status) {
-					this.props.setUsernameCallBack(username);
-					this.props.setPasswordCallBack(password);
-					await this.setState({ username: '', password: '' });
+					this.props.setUsernameCallBack(UserName);
+					this.props.setPasswordCallBack(PassWord);
+					await this.setState({ UserName: '', PassWord: '' });
 					this.props.navigation.navigate('Badger Bytes');
 				} else {
 					alert('Error logging in!');
@@ -80,13 +80,14 @@ class Login extends Component {
 				<TextInput
 					autoCapitalize='none'
 					placeholder={'Username'}
-					onChangeText={(value) => this.setState({ username: value })}
+					onChangeText={(value) => this.setState({ UserName: value })}
 					style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
 				/>
 				<TextInput
 					autoCapitalize='none'
 					placeholder={'Password'}
-					onChangeText={(value) => this.setState({ password: value })}
+					secureTextEntry={true}
+					onChangeText={(value) => this.setState({ PassWord: value })}
 					style={{
 						height: 42,
 						width: '80%',
@@ -135,11 +136,11 @@ class Login extends Component {
 					</TouchableOpacity>
 				</View>
 
-				{/* <Text>{this.state.username}</Text>
-              <Text>{this.state.password}</Text>
+				{/* <Text>{this.state.UserName}</Text>
+              <Text>{this.state.PassWord}</Text>
               <Text>{this.state.token}</Text> */}
 			</View>
 		);
 	}
 }
-export default withNavigationFocus(Login);
+export default withNavigationFocus(LoginScreen);
