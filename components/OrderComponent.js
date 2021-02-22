@@ -5,15 +5,42 @@ import {
 	Image,
 	TextInput,
 	TouchableOpacity,
+	Button,
 } from 'react-native';
 import React from 'react';
 import moment from 'moment';
-import Dialog from 'react-native-dialog';
+import DialogInput from 'react-native-dialog-input';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class OrderComponent extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { modalvisible: false, car: '', pickuptime: '' };
+		this.state = {
+			modalvisible: false,
+			oldcar: '',
+			newcar: '',
+			pickuptime: '',
+			mode: 'time',
+		};
+		this.onChange = this.onChange.bind(this);
+	}
+	handleConfirm(car) {
+		if (car === undefined) {
+			alert('No Car Description.');
+		} else {
+			this.setState({ modalvisible: true, car: car });
+		}
+	}
+	onChange(event, selectedDate) {
+		this.setState(
+			{
+				date: selectedDate,
+			} /*() => console.log(this.state.date.toLocaleString()), () => console.log(this.state.date)*/
+		);
+	}
+	formattedDate() {
+		var formattedDate = new Date(this.state.date);
+		return formattedDate;
 	}
 	compilePDF() {
 		console.log('Compile PDF Functionality Yet to be Implemented');
@@ -34,30 +61,40 @@ export default class OrderComponent extends React.Component {
 		// 	console.log(foodItem[2]);
 		// });
 		var d = new Date();
-		let pickupInfo;
-		if (order.Status === 'Incomplete') {
-			pickupInfo = (
-				<TextInput
-					placeholderTextColor='#5EA9F4'
-					style={styles.input}
-					onChangeText={(text) => this.setState({ car: text })}
-					placeholder={'Update Car Description'}
-				/>
-			);
-		}
-		// let modal = (
-		// 	<View>
-		// 		<Dialog.Container visible={this.state.modalvisible}>
-		// 			<Dialog.Title>Account delete</Dialog.Title>
-		// 			<Dialog.Description>
-		// 				Do you want to delete this account? You cannot undo this action.
-		// 			</Dialog.Description>
-		// 			<Dialog.Input></Dialog.Input>
-		// 			<Dialog.Button label='Cancel' />
-		// 			<Dialog.Button label='Delete' />
-		// 		</Dialog.Container>
-		// 	</View>
-		// );
+		let pickupInfo = (
+			<DateTimePicker
+				style={styles.timeinput}
+				testID='dateTimePicker'
+				value={this.formattedDate}
+				mode={this.state.mode}
+				is24Hour={true}
+				display='default'
+				onChange={this.onChange}
+			/>
+		);
+		// if (order.Status === 'Incomplete') {
+		// 	pickupInfo = (
+		// 		<TextInput
+		// 			placeholderTextColor='#5EA9F4'
+		// 			style={styles.input}
+		// 			onChangeText={(text) => this.setState({ car: text })}
+		// 			placeholder={'Update Car Description'}
+		// 		/>
+		// 	);
+		// }
+		let modal = (
+			<DialogInput
+				isDialogVisible={this.state.modalvisible}
+				title={'Enter Car Description'}
+				message={'Help us identify you for picking up food'}
+				hintInput={'Blue Ford Focus'}
+				submitInput={(inputText) => {
+					this.handleConfirm(inputText);
+				}}
+				closeDialog={() =>
+					this.setState({ modalvisible: false })
+				}></DialogInput>
+		);
 		return (
 			<View style={styles.mealcard}>
 				<View style={styles.row}>
@@ -71,16 +108,24 @@ export default class OrderComponent extends React.Component {
 						onPress={() => alert('Receipt functionality not implemented')}>
 						<Text>View Full Receipt </Text>
 					</TouchableOpacity>
+
+					{modal}
 				</View>
 				<View style={styles.row}>
 					{/* {' '} */}
-					<Text>Completed: {moment(d).calendar()}</Text>
-					{/* {pickupInfo} */}
+					<Text>Pick up Time: {moment(d).calendar()}</Text>
+					<Button
+						title='Update Car'
+						style={styles.button}
+						onPress={() => this.setState({ modalvisible: true })}
+					/>
 				</View>
+				{pickupInfo}
 
-				<Text>Cost: {order.TotalCost}</Text>
+				<View style={styles.row}>
+					<Text>Cost: {order.TotalCost}</Text>
+				</View>
 				<View style={styles.spaceVertical}></View>
-
 				<Text style={{ fontWeight: '500', fontSize: 16 }}>
 					Some of the items on this meal were:
 				</Text>
@@ -143,6 +188,12 @@ const styles = StyleSheet.create({
 		padding: 10,
 		margin: 5,
 		height: 40,
+	},
+	timeinput: {
+		width: '50%',
+		// padding: 10,
+		// margin: 5,
+		// height: 100,
 		borderColor: '#5EA9F4',
 		borderWidth: 1,
 	},
