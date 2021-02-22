@@ -70,7 +70,7 @@ export default class OrderComponent extends React.Component {
 				isDialogVisible={this.state.carmodal}
 				title={'Enter Car Description'}
 				message={'Help us identify you for picking up food'}
-				hintInput={'Blue Ford Focus'}
+				hintInput={order.CarDescription}
 				submitInput={(inputText) => {
 					this.handleConfirm(inputText);
 				}}

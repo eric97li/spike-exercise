@@ -55,6 +55,9 @@ export default class OrdersScreen extends Component {
 				/>
 			);
 		}
+		if (orders.length === 0) {
+			return <Text>You have no orders. Try our menu!</Text>;
+		}
 		return orderComponents;
 	}
 	render() {
@@ -65,12 +68,14 @@ export default class OrdersScreen extends Component {
 						width: '95%',
 						height: '95%',
 						justifyContent: 'center',
+						paddingTop: '30%',
 						alignSelf: 'center',
 						alignContent: 'center',
 						alignItems: 'center',
 					}}>
-					<Text style={{ fontWeight: '700', fontSize: 30 }}>
-						Your Previous Orders
+					<Text
+						style={{ fontWeight: '700', fontSize: 30, paddingBottom: '10%' }}>
+						{this.props.username}'s Previous Orders
 					</Text>
 
 					{this.getOrderItems()}
