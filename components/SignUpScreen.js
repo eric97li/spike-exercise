@@ -46,10 +46,11 @@ export default class SignUp extends Component {
 
 		const data = {
 			UserName: username,
-			Password: password,
+			PassWord: password,
 			Role: role,
 			Phone: phonenumber,
 			Address: address,
+			PaymentType: preferredPayment,
 			//payment info to be determine
 		};
 		// const data = {
@@ -68,18 +69,21 @@ export default class SignUp extends Component {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(data),
-		}).then((response) => console.log(response));
-		// .then((response) => response.json())
-		// .then((json) => {
-		// 	console.log(json);
-		// 	if (json.status) {
-		// 		alert('Profile created');
-		// 		//Navigate to login page
-		// 		this.props.navigation.navigate('Login');
-		// 	} else {
-		// 		alert('Invalid username. Try another cone.');
-		// 	}
-		// });
+			// }).then((response) => console.log(response));
+		})
+			.then((response) => response.json())
+			.then((json) => {
+				console.log(json);
+				if (json.Status) {
+					alert('Profile created');
+					//Navigate to login page
+					this.props.setUsernameCallBack(username);
+					this.props.setPasswordCallBack(password);
+					this.props.navigation.navigate('Login');
+				} else {
+					alert('Invalid username. Try another one.');
+				}
+			});
 	};
 
 	render() {
