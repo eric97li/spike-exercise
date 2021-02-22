@@ -80,9 +80,6 @@ export default class Login extends Component {
 				/>
 				<View style={{ marginTop: '10%', width: '80%' }}>
 					<TouchableOpacity
-						accessible={true}
-						accessibilityLabel='Login Button'
-						accessibilityHint='Activate to login'
 						style={{
 							borderWidth: 1,
 							height: 42,

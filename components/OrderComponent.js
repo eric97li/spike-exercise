@@ -32,17 +32,6 @@ export default class OrderComponent extends React.Component {
 			this.setState({ carmodal: true, car: car });
 		}
 	}
-	// onChange(event, selectedDate) {
-	// 	this.setState(
-	// 		{
-	// 			date: selectedDate,
-	// 		} /*() => console.log(this.state.date.toLocaleString()), () => console.log(this.state.date)*/
-	// 	);
-	// }
-	// formattedDate() {
-	// 	var formattedDate = new Date(this.state.date);
-	// 	return formattedDate;
-	// }
 
 	compilePDF() {
 		console.log('Compile PDF Functionality Yet to be Implemented');

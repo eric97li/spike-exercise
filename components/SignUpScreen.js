@@ -51,7 +51,6 @@ export default class SignUp extends Component {
 			Phone: phonenumber,
 			Address: address,
 			PaymentType: preferredPayment,
-			//payment info to be determine
 		};
 		// const data = {
 		// 	'UserName': 'Titus',
@@ -61,7 +60,7 @@ export default class SignUp extends Component {
 		// 	'Address': 'feafa',
 		// };
 		console.log(JSON.stringify(data));
-		fetch('https://ripple506.herokuapp.com/CreateAccount/', {
+		fetch('https://ripple506.herokuapp.com/CreateAccount', {
 			method: 'POST',
 			headers: {
 				'Accept': '*/*',
@@ -69,7 +68,6 @@ export default class SignUp extends Component {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(data),
-			// }).then((response) => console.log(response));
 		})
 			.then((response) => response.json())
 			.then((json) => {
@@ -79,7 +77,7 @@ export default class SignUp extends Component {
 					//Navigate to login page
 					this.props.setUsernameCallBack(username);
 					this.props.setPasswordCallBack(password);
-					this.props.navigation.navigate('Login');
+					this.props.navigation.navigate('Badger Bytes');
 				} else {
 					alert('Invalid username. Try another one.');
 				}
