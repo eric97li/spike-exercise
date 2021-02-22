@@ -41,17 +41,20 @@ export default class OrderComponent extends React.Component {
 	}
 	render() {
 		//replace with props.order eventually
-		let order = {
-			'CarDescription': '',
-			'CreatedTime': '2021-02-05 20:28:54',
-			'OrderID': 'JunyuTest2021-02-05',
-			'Status': 'Incomplete',
-			'TimetoPickUp': 'Sun Feb 21 2021 12:16:35 GMT-0500 (EST)',
-			'UserName': 'JunyuTest',
-			'FoodItems': ['dish1', 'dish2'],
-			'TotalCost': '$13.44',
-		};
+		// let order = {
+		// 	'CarDescription': '',
+		// 	'CreatedTime': '2021-02-05 20:28:54',
+		// 	'OrderID': 'JunyuTest2021-02-05',
+		// 	'Status': 'Incomplete',
+		// 	'TimetoPickUp': 'Sun Feb 21 2021 12:16:35 GMT-0500 (EST)',
+		// 	'UserName': 'JunyuTest',
+		// 	'FoodItems': ['dish1', 'dish2'],
+		// 	'TotalCost': '$13.44',
+		// };
+		const order = this.props;
+		console.log(this.props);
 
+		console.log(order);
 		var d = new Date();
 		let pickupInfo = (
 			<DateTimePickerModal
