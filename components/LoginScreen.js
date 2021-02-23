@@ -13,10 +13,12 @@ class LoginScreen extends Component {
 
 	//Allows us to reset stack title
 	componentDidMount() {
+		console.log('CDM called');
 		this._unsubscribe = this.props.navigation.addListener('focus', () => {
-			// console.log('focused');
+			console.log('focused');
 			this.props.setUsernameCallBack('');
 			this.props.setPasswordCallBack('');
+			// this.props.clearUsernameAndPassword();
 			// do something
 		});
 	}

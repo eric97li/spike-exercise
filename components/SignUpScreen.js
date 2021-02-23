@@ -70,6 +70,7 @@ export default class SignUp extends Component {
 					//Navigate to login page
 					this.props.setUsernameCallBack(username);
 					this.props.setPasswordCallBack(password);
+					this.props.navigation.pop();
 					this.props.navigation.navigate('Badger Bytes');
 				} else {
 					alert('Invalid username. Try another one.');

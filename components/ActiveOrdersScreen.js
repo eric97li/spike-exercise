@@ -6,26 +6,26 @@ import {
 	Text,
 	ScrollView,
 } from 'react-native';
-import OrderComponent from './OrderComponent';
-export default class OrdersScreen extends Component {
+import ActiveOrderComponent from './ActiveOrderComponent';
+export default class ActiveOrdersScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { orders: [] };
 	}
 
 	componentDidMount() {
-		this._unsubscribe = this.props.navigation.addListener('focus', () => {
-			this.fetchData();
-		});
+		// this._unsubscribe = this.props.navigation.addListener('focus', () => {
+		this.fetchData();
+		// });
 	}
 	componentWillUnmount() {
-		this._unsubscribe();
+		// this._unsubscribe();
 	}
 	// orderCallback() {
 	// 	this.fetchData();
 	// }
 	fetchData() {
-		fetch('https://ripple506.herokuapp.com/GetOrderHistory', {
+		fetch('https://ripple506.herokuapp.com/ViewActiveOrders', {
 			method: 'POST',
 			headers: {
 				'Accept': '*/*',
@@ -38,45 +38,32 @@ export default class OrdersScreen extends Component {
 			.then((response) => response.json())
 
 			.then(async (json) => {
-				this.setState({ orders: json });
 				// console.log(json);
-				if (json.Status) {
-				}
+				this.setState({ orders: json });
 			});
 	}
 
 	getOrderItems() {
 		const { orders } = this.state;
-		let props = ['DUMMYDATA'];
 		let orderComponents = [];
 		for (let i = 0; i < orders.length; i++) {
 			// console.log(i);
 			// console.log(orders[i]);
+			// console.log(orders[i]);
 			orderComponents.push(
-				<OrderComponent
+				<ActiveOrderComponent
 					orderCallback={() => this.fetchData()}
 					key={i}
-					dataKey={i}
-					OrderID={orders[i].OrderID}
-					TimetoPickUp={orders[i].TimetoPickUp}
-					TotalCost={orders[i].TotalCost}
-					Status={orders[i].Status}
-					CarDescription={orders[i].CarDescription}
-					CreatedTime={orders[i].CreatedTime}
-					FoodItems={orders[i].FoodItems}
-					Role={this.Role}
+					orderID={orders[i]}
 				/>
 			);
 		}
 		if (orders.length === 0) {
-			return <Text>You have no orders. Try our menu!</Text>;
+			return <Text>There are no active orders. Congrats!</Text>;
 		}
 		return orderComponents;
 	}
 	render() {
-		console.log('RENDER');
-		console.log(this.props);
-		console.log(this.props.username);
 		return (
 			<ScrollView>
 				<View
@@ -91,7 +78,7 @@ export default class OrdersScreen extends Component {
 					}}>
 					<Text
 						style={{ fontWeight: '700', fontSize: 30, paddingBottom: '10%' }}>
-						{this.props.username}'s Previous Orders
+						Active Orders!
 					</Text>
 
 					{this.getOrderItems()}
