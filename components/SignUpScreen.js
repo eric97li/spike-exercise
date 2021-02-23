@@ -20,6 +20,11 @@ export default class SignUp extends Component {
 			preferredPayment: '',
 		};
 	}
+	goToLogin() {
+		// this.props.navigation.pop();
+
+		this.props.navigation.replace('Login');
+	}
 	signup_field = () => {
 		const {
 			username,
@@ -63,14 +68,15 @@ export default class SignUp extends Component {
 			body: JSON.stringify(data),
 		})
 			.then((response) => response.json())
-			.then((json) => {
+			.then(async (json) => {
 				console.log(json);
 				if (json.Status) {
 					alert('Profile created');
 					//Navigate to login page
+					await this.props.navigation.replace('Login');
+
 					this.props.setUsernameCallBack(username);
 					this.props.setPasswordCallBack(password);
-					this.props.navigation.pop();
 					this.props.navigation.navigate('Badger Bytes');
 				} else {
 					alert('Invalid username. Try another one.');
@@ -174,6 +180,22 @@ export default class SignUp extends Component {
 						}}
 						onPress={() => this.signup_field()}>
 						<Text style={{ color: 'white' }}> Sign Up </Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={{
+							borderWidth: 1,
+							height: 42,
+							width: '80%',
+							justifyContent: 'center',
+							alignItems: 'center',
+							borderRadius: 40,
+							backgroundColor: 'white',
+							alignSelf: 'center',
+							textAlign: 'center',
+							marginTop: 10,
+						}}
+						onPress={() => this.goToLogin()}>
+						<Text style={{ color: 'black' }}> Return to Login Screen </Text>
 					</TouchableOpacity>
 				</View>
 			</View>

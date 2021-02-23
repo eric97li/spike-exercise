@@ -22,30 +22,31 @@ export default class App extends Component {
 			username: '',
 			password: '',
 			role: '',
+			logintitle: '',
 		};
 
 		this.setUsername = this.setUsername.bind(this);
 		this.setPassword = this.setPassword.bind(this);
-		this.clearUsernameAndPassword = this.clearUsernameAndPassword.bind(this);
+		// this.clearUsernameAndPassword = this.clearUsernameAndPassword.bind(this);
 	}
-	getLoginStackTitle() {
-		console.log('GET LST');
-		if (!this.state.username) {
-			console.log('Returning Login');
-			return 'Login';
-		} else {
-			return 'Logout';
-		}
-	}
+	// getLoginStackTitle() {
+	// 	// if (!this.state.username) {
+	// 	// 	console.log('Returning Login');
+	// 	// 	return 'Login';
+	// 	// } else {
+	// 	// 	return 'Logout';
+	// 	// }
+	// 	return this.state.logintitle;
+	// }
 	getSignupStackTitle() {
-		console.log('GET SST');
 		if (!this.state.username) {
 			return 'Signin';
 		} else return 'Logout';
 	}
-	clearUsernameAndPassword() {
-		this.setState({ username: '', password: '' });
-	}
+	// clearUsernameAndPassword() {
+	// 	console.log('Clear Username and Password');
+	// 	this.setState({ username: '', password: '' });
+	// }
 	setUsername(y) {
 		console.log(y);
 
@@ -183,21 +184,18 @@ export default class App extends Component {
 				<Stack.Navigator>
 					{/* Temporarily Commented Out to avoid login functionality */}
 
-					<Stack.Screen
-						name='Login'
-						options={{ title: this.getLoginStackTitle() }}>
+					<Stack.Screen name='Login' options={{ title: this.state.logintitle }}>
 						{(props) => (
 							<LoginScreen
 								{...props}
 								setUsernameCallBack={this.setUsername}
 								setPasswordCallBack={this.setPassword}
 								clearUsernameAndPassword={this.clearUsernameAndPassword}
+								setScreenTitle={(title) => this.setState({ logintitle: title })}
 							/>
 						)}
 					</Stack.Screen>
-					<Stack.Screen
-						name='Sign Up'
-						options={{ title: this.getSignupStackTitle() }}>
+					<Stack.Screen name='Sign Up' options={{ title: 'Sign Up' }}>
 						{(props) => (
 							<SignUpScreen
 								{...props}

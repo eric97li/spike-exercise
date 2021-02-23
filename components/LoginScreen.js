@@ -13,18 +13,20 @@ class LoginScreen extends Component {
 
 	//Allows us to reset stack title
 	componentDidMount() {
-		console.log('CDM called');
 		this._unsubscribe = this.props.navigation.addListener('focus', () => {
-			console.log('focused');
-			this.props.setUsernameCallBack('');
-			this.props.setPasswordCallBack('');
-			// this.props.clearUsernameAndPassword();
-			// do something
+			// console.log('FOCUS');
+			this.props.setScreenTitle('Login');
+		});
+		this.props.navigation.addListener('blur', () => {
+			// console.log('UNFOCUS');
+			this.props.setScreenTitle('Logout');
 		});
 	}
 
 	componentWillUnmount() {
+		// console.log('CWU CALLED');
 		this._unsubscribe();
+		// this.props.setScreenTitle('Logout');
 	}
 
 	validate_field = () => {
@@ -52,7 +54,7 @@ class LoginScreen extends Component {
 			.then((response) => response.json())
 
 			.then(async (json) => {
-				console.log(json);
+				// console.log(json);
 				if (json.Status) {
 					this.props.setUsernameCallBack(UserName);
 					this.props.setPasswordCallBack(PassWord);
@@ -65,7 +67,9 @@ class LoginScreen extends Component {
 	};
 
 	goToSignUp() {
-		this.props.navigation.navigate('Sign Up');
+		// this.props.navigation.pop();
+
+		this.props.navigation.replace('Sign Up');
 	}
 
 	render() {
@@ -145,4 +149,5 @@ class LoginScreen extends Component {
 		);
 	}
 }
-export default withNavigationFocus(LoginScreen);
+// export default withNavigationFocus(LoginScreen);
+export default LoginScreen;
