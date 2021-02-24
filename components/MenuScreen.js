@@ -170,9 +170,23 @@ export default class MenuScreen extends Component {
 					})
 			})
 			.then(response => {
-				// clear the order queue
-				this.setState({order: []})
-				alert("Order created!")
+				return fetch('https://ripple506.herokuapp.com/GetAccountInfo', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						"UserName": this.props.username
+					})
+				})
+				.then(response => response.json())
+				.then(response => {
+					alert("Order created! Payment confirmed with " + response.PaymentType)
+					
+					// clear the order queue
+					this.setState({order: []})
+				})
+
 			})
 
 			
@@ -241,7 +255,7 @@ export default class MenuScreen extends Component {
 		if(this.props.role == "Customer") {
 			return (<TouchableOpacity style={[styles.updateButton]}> 
 				<Text style={styles.buttonText} onPress={()=>{this.addItemToOrder(mealID, mealName);}}>
-				  Buy
+				  Add to order
 				</Text>
 				  </TouchableOpacity>
 				)
@@ -250,11 +264,14 @@ export default class MenuScreen extends Component {
 
 	getCreateOrderButton= () => {
 		if(this.props.role == "Customer") {
-			return (<TouchableOpacity style={[styles.addButton]}> 
+			return (<View>
+			<Text>Current order: {this.state.orderNames}</Text>	
+			<TouchableOpacity style={[styles.addButton]}> 
 				<Text style={styles.buttonText} onPress={()=>{this.createOrder();}}>
-				  Create Order
+				  Finalize order
 				</Text>
 				  </TouchableOpacity>
+				  </View>
 				)
 		}
 	}
@@ -272,7 +289,8 @@ export default class MenuScreen extends Component {
 			<Modal visible={modalVisible}>
 
 			<View>
-          <Text style={{fontSize: 30}}>Add Item</Text>
+          <Text style={{fontSize: 30, marginTop:"50%", justifyContent: "center"
+              , alignSelf: "center", alignContent: "center", alignItems: "center"}}>Add Item</Text>
 
           <View style={{width: "100%", justifyContent: "center"
               , alignSelf: "center", alignContent: "center", alignItems: "center"
@@ -347,7 +365,8 @@ export default class MenuScreen extends Component {
 			<Modal visible={editModalVisible}>
 
 			<View>
-          <Text style={{fontSize: 30}}>Update Item</Text>
+          <Text style={{fontSize: 30, marginTop:"50%", justifyContent: "center"
+              , alignSelf: "center", alignContent: "center", alignItems: "center"}}>Update Item</Text>
 
           <View style={{width: "100%", justifyContent: "center"
               , alignSelf: "center", alignContent: "center", alignItems: "center"
@@ -422,7 +441,8 @@ export default class MenuScreen extends Component {
 			<Modal visible={inventoryModalVisible}>
 
 			<View>
-          <Text style={{fontSize: 30}}>Update Item Status</Text>
+          <Text style={{fontSize: 30, marginTop:"50%", justifyContent: "center"
+              , alignSelf: "center", alignContent: "center", alignItems: "center"}}>Update Item Status</Text>
 
           <View style={{width: "100%", justifyContent: "center"
               , alignSelf: "center", alignContent: "center", alignItems: "center"
@@ -485,9 +505,7 @@ export default class MenuScreen extends Component {
     							Add Item
   							</Text>
 						</TouchableOpacity> */}
-						{this.getAddButton()}
-
-						<Text>{this.state.orderNames}</Text>			
+						{this.getAddButton()}		
 
 						{this.getCreateOrderButton()}
 						
