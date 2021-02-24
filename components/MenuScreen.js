@@ -17,6 +17,7 @@ export default class MenuScreen extends Component {
 			editMealName: "",
 
 			picture: "",
+			editPicture: "",
 
 			cost: "",
 			editCost: "",
@@ -57,9 +58,27 @@ export default class MenuScreen extends Component {
 	}
 
 	addItem = () => {
-		// return fetch("https://ripple506.herokuapp.com/AddItem", {
-		// 	method: 'POST'
-		// })
+		return fetch("https://ripple506.herokuapp.com/AddItem", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				MealName: this.state.mealName,
+				Picture: this.state.picture,
+				Cost: this.state.cost,
+				Availability: this.state.availability
+			 })
+			})
+			 .then(response => {
+				return fetch("https://ripple506.herokuapp.com/ViewMenu", {
+					method: 'GET',
+				})
+				.then(response => response.json())
+				.then(response => {
+					this.setState({items: response});
+				})
+			 })
 	}
 
 	updateItem = (MealName, Picture, Cost, Availability) => {
@@ -95,6 +114,12 @@ export default class MenuScreen extends Component {
           />
 
 		  {/* picture */}
+		  <TextInput style={{marginTop: "40%"}} placeholder={"Picture"}
+          onChangeText={(value)=> this.setState({picture: value})}
+          style={{ height: 42, width: "80%", borderBottomWidth: 1}}
+          />
+
+		  <View style={{marginBottom:"5%"}}></View>
 
 		 {/* availability dropdown */}
 		 <DropDownPicker items={[
@@ -165,7 +190,12 @@ export default class MenuScreen extends Component {
 
 
 				{/* picture */}
-				<View style={{marginBottom:"10%"}}></View>
+		  		<TextInput style={{marginTop: "40%"}} placeholder={this.state.picture}
+          		onChangeText={(value)=> this.setState({editPicture: value})}
+          		style={{ height: 42, width: "80%", borderBottomWidth: 1}}
+          		/>
+
+				<View style={{marginBottom:"5%"}}></View>
 
 		 		{/* availability dropdown */}
 				 <DropDownPicker items={[
