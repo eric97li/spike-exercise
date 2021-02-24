@@ -50,7 +50,7 @@ export default class MenuScreen extends Component {
 	}
 
 	setModalVisible = () => {
-		this.setState({modalVisible: !this.state.setModalVisible});
+		this.setState({modalVisible: !this.state.modalVisible});
 	}
 
 	setEditModalVisible = (mealName, picture, cost, availability) => {
@@ -487,13 +487,10 @@ export default class MenuScreen extends Component {
 						</TouchableOpacity> */}
 						{this.getAddButton()}
 
-						<ListItem.Subtitle>
-						<Text>{this.state.orderNames}</Text>
-						</ListItem.Subtitle>
+						<Text>{this.state.orderNames}</Text>			
 
-						<ListItem.Subtitle>
 						{this.getCreateOrderButton()}
-						</ListItem.Subtitle>
+						
 					</ListItem.Content>
 				</ListItem>
 				}
