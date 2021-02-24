@@ -12,6 +12,7 @@ import moment from 'moment';
 import DialogInput from 'react-native-dialog-input';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 export default class OrderComponent extends React.Component {
 	constructor(props) {
@@ -24,8 +25,24 @@ export default class OrderComponent extends React.Component {
 			TimetoPickUp: '',
 		};
 	}
-	compilePDF() {
+	async compilePDF() {
 		console.log('Compile PDF Functionality Yet to be Implemented');
+		// async createPDF() {
+		let options = {
+			html: '<h1>PDF TEST</h1>',
+			fileName: 'test',
+			directory: 'Documents',
+		};
+
+		try {
+			let file = await RNHTMLtoPDF.convert(options);
+			// console.log(file.filePath);
+			alert(file.filePath);
+		} catch (err) {
+			console.log(err);
+		}
+
+		//   }
 	}
 	changeTimetoPickUp(time) {
 		// console.log(time);
@@ -182,7 +199,7 @@ export default class OrderComponent extends React.Component {
 				<TouchableOpacity
 					style={styles.button}
 					title='Compile Receipt'
-					onPress={() => alert('Receipt functionality not implemented')}>
+					onPress={() => this.compilePDF()}>
 					<Text>View Full Receipt </Text>
 				</TouchableOpacity>
 			</View>
