@@ -90,7 +90,12 @@ export default class OrdersScreen extends Component {
 						alignItems: 'center',
 					}}>
 					<Text
-						style={{ fontWeight: '700', fontSize: 30, paddingBottom: '10%' }}>
+						style={{
+							fontWeight: '700',
+							fontSize: 30,
+							textAlign: 'center',
+							paddingBottom: '10%',
+						}}>
 						{this.props.username}'s Previous Orders
 					</Text>
 

@@ -266,9 +266,6 @@ const styles = StyleSheet.create({
 	},
 	timeinput: {
 		width: '50%',
-		// padding: 10,
-		// margin: 5,
-		// height: 100,
 		borderColor: '#5EA9F4',
 		borderWidth: 1,
 	},
