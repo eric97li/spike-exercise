@@ -103,7 +103,7 @@ export default class MenuScreen extends Component {
 			 ]}
 			 placeholder={'Available'} 
 			 defaultValue={this.state.availability}
-			 containerStyle={{height: 40}}
+			 containerStyle={{width: 150, height: 40}}
 			 style={{backgroundColor: '#fafafa'}}
 			 itemStyle={{
 				 justifyContent: 'flex-start'
