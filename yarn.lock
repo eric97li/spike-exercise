@@ -5453,6 +5453,7 @@ react-native-modal-datetime-picker@^9.1.0:
   dependencies:
     prop-types "^15.7.2"
 
+<<<<<<< HEAD
 react-native-month-year-picker@^1.6.4:
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/react-native-month-year-picker/-/react-native-month-year-picker-1.6.4.tgz#badcbf4de7b2214773e8941ebd7e4933ccbedf26"
@@ -5468,6 +5469,8 @@ react-native-pdf-lib@^1.0.0:
   dependencies:
     babel-preset-flow "^6.23.0"
 
+=======
+>>>>>>> 73b70cea15313b0a0fbe10c40b953218bf5d998b
 react-native-ratings@^7.3.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-7.4.0.tgz#2b93c9bdd201238591d09747791b4c55e5862959"

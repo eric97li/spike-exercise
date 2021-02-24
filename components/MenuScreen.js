@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 export default class MenuScreen extends Component {
 	constructor(props) {
@@ -28,6 +27,7 @@ export default class MenuScreen extends Component {
 			editMealName: '',
 
 			picture: '',
+			editPicture: '',
 
 			cost: '',
 			editCost: '',
@@ -48,17 +48,6 @@ export default class MenuScreen extends Component {
 				});
 		});
 	}
-	async createPDF() {
-		let options = {
-			html: '<h1>PDF TEST</h1>',
-			fileName: 'test',
-			directory: 'Documents',
-		};
-
-		let file = await RNHTMLtoPDF.convert(options);
-		// console.log(file.filePath);
-		alert(file.filePath);
-	}
 
 	setModalVisible = (visible) => {
 		this.setState({ modalVisible: visible });
@@ -78,9 +67,26 @@ export default class MenuScreen extends Component {
 	};
 
 	addItem = () => {
-		// return fetch("https://ripple506.herokuapp.com/AddItem", {
-		// 	method: 'POST'
-		// })
+		return fetch('https://ripple506.herokuapp.com/AddItem', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				MealName: this.state.mealName,
+				Picture: this.state.picture,
+				Cost: this.state.cost,
+				Availability: this.state.availability,
+			}),
+		}).then((response) => {
+			return fetch('https://ripple506.herokuapp.com/ViewMenu', {
+				method: 'GET',
+			})
+				.then((response) => response.json())
+				.then((response) => {
+					this.setState({ items: response });
+				});
+		});
 	};
 
 	updateItem = (MealName, Picture, Cost, Availability) => {
@@ -121,6 +127,14 @@ export default class MenuScreen extends Component {
 							/>
 
 							{/* picture */}
+							<TextInput
+								style={{ marginTop: '40%' }}
+								placeholder={'Picture'}
+								onChangeText={(value) => this.setState({ picture: value })}
+								style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
+							/>
+
+							<View style={{ marginBottom: '5%' }}></View>
 
 							{/* availability dropdown */}
 							<DropDownPicker
@@ -214,7 +228,14 @@ export default class MenuScreen extends Component {
 							/>
 
 							{/* picture */}
-							<View style={{ marginBottom: '10%' }}></View>
+							<TextInput
+								style={{ marginTop: '40%' }}
+								placeholder={this.state.picture}
+								onChangeText={(value) => this.setState({ editPicture: value })}
+								style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
+							/>
+
+							<View style={{ marginBottom: '5%' }}></View>
 
 							{/* availability dropdown */}
 							<DropDownPicker
