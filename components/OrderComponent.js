@@ -13,7 +13,8 @@ import DialogInput from 'react-native-dialog-input';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
-
+// import { Print } from 'expo-print';
+import * as Print from 'expo-print';
 export default class OrderComponent extends React.Component {
 	constructor(props) {
 		super(props);
@@ -26,21 +27,30 @@ export default class OrderComponent extends React.Component {
 		};
 	}
 	async compilePDF() {
-		console.log('Compile PDF Functionality Yet to be Implemented');
-		// async createPDF() {
-		let options = {
-			html: '<h1>PDF TEST</h1>',
-			fileName: 'test',
-			directory: 'Documents',
-		};
+		// console.log('Compile PDF Functionality Yet to be Implemented');
+		// // async createPDF() {
+		// let options = {
+		// 	html: '<h1>PDF TEST</h1>',
+		// 	fileName: 'test',
+		// 	directory: 'Documents',
+		// };
 
-		try {
-			let file = await RNHTMLtoPDF.convert(options);
-			// console.log(file.filePath);
-			alert(file.filePath);
-		} catch (err) {
-			console.log(err);
-		}
+		// try {
+		// 	let file = await RNHTMLtoPDF.convert(options);
+		// 	// console.log(file.filePath);
+		// 	alert(file.filePath);
+		// } catch (err) {
+		// 	console.log(err);
+		// }
+
+		let filePath = await Print.printToFileAsync({
+			html: '<h1>PDF TEST</h1>',
+			width: 612,
+			height: 792,
+			base64: false,
+		});
+
+		alert('PDF Generated', filePath.uri);
 
 		//   }
 	}

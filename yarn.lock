@@ -3158,6 +3158,11 @@ expo-permissions@~10.0.0:
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-10.0.0.tgz#5b31c54d561d00c7e46cd02321bc3704c51c584b"
   integrity sha512-b6oitd4JmFdQ7DxczZ2WRS9aDyqgVM7lEhy3JyKZ2dbU19C6NyHyLCcwssZgfzOfGnp2owoaWn3KU4zdrF5MIA==
 
+expo-print@~9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/expo-print/-/expo-print-9.2.0.tgz#28c4d64bb40c1d1c61ea667517dc83894b77090d"
+  integrity sha512-cRrvfU2Xmy/aFBqbvvrEPM/iLmShEiBbVEpiFi4meZtoSnrIcuJAipp7sMOe7q1aOZkSxzTTaXs64PBL8tMkaw==
+
 expo-secure-store@~9.3.0:
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-9.3.0.tgz#b716d5d115cc50a34037d1afef84fe4b8ea0745c"
@@ -5453,7 +5458,6 @@ react-native-modal-datetime-picker@^9.1.0:
   dependencies:
     prop-types "^15.7.2"
 
-<<<<<<< HEAD
 react-native-month-year-picker@^1.6.4:
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/react-native-month-year-picker/-/react-native-month-year-picker-1.6.4.tgz#badcbf4de7b2214773e8941ebd7e4933ccbedf26"
@@ -5469,8 +5473,6 @@ react-native-pdf-lib@^1.0.0:
   dependencies:
     babel-preset-flow "^6.23.0"
 
-=======
->>>>>>> 73b70cea15313b0a0fbe10c40b953218bf5d998b
 react-native-ratings@^7.3.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-7.4.0.tgz#2b93c9bdd201238591d09747791b4c55e5862959"

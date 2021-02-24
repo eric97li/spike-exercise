@@ -12,6 +12,7 @@ export default class ProfileScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			UserName: '',
 			PassWord: '',
 			Phone: '',
 			Address: '',
@@ -22,7 +23,7 @@ export default class ProfileScreen extends Component {
 		this.passInput = React.createRef();
 		this.paymentInput = React.createRef();
 		this.addressInput = React.createRef();
-		// this.userInput = React.createRef();
+		this.userInput = React.createRef();
 	}
 	//Allows us to reset stack title
 	componentDidMount() {
@@ -59,15 +60,7 @@ export default class ProfileScreen extends Component {
 	}
 
 	updateProfile() {
-		console.log(
-			JSON.stringify({
-				UserName: this.props.UserName,
-				PassWord: this.state.PassWord,
-				Phone: this.state.Phone,
-				Address: this.state.Address,
-				PaymentType: this.state.PaymentType,
-			})
-		);
+		// alert('update profile called');
 		fetch('https://ripple506.herokuapp.com/UpdateAccount', {
 			method: 'POST',
 			headers: {
@@ -76,24 +69,25 @@ export default class ProfileScreen extends Component {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				UserName: this.props.username,
+				OldUserName: this.props.username,
+				NewUserName: this.state.UserName,
 				PassWord: this.state.PassWord,
 				Phone: this.state.Phone,
 				Address: this.state.Address,
 				PaymentType: this.state.PaymentType,
 			}),
 		})
-			// .then((response) => response.json())
 			.then((response) => response.json())
 
-			.then(async (json) => {
+			.then((json) => {
+				this.phoneInput.current.clear();
+				this.passInput.current.clear();
+				this.addressInput.current.clear();
+				this.paymentInput.current.clear();
+				this.userInput.current.clear();
+
 				console.log(json);
 			});
-		this.phoneInput.current.value = '';
-		this.passInput.current.value = '';
-		this.addressInput.current.value = '';
-		this.paymentInput.current.value = '';
-		// this.userInput.current.value = '';
 	}
 
 	render() {
@@ -122,6 +116,15 @@ export default class ProfileScreen extends Component {
 						onChangeText={(text) => this.setState({ UserName: text })}
 						placeholder={this.state.UserName}
 					/> */}
+					<Text>Username</Text>
+					<TextInput
+						ref={this.userInput}
+						// secureTextEntry={true}
+						placeholderTextColor='#5EA9F4'
+						style={styles.input}
+						onChangeText={(text) => this.setState({ UserName: text })}
+						placeholder={this.state.UserName}
+					/>
 					<Text>Password</Text>
 					<TextInput
 						ref={this.passInput}
@@ -129,7 +132,7 @@ export default class ProfileScreen extends Component {
 						placeholderTextColor='#5EA9F4'
 						style={styles.input}
 						onChangeText={(text) => this.setState({ PassWord: text })}
-						placeholder={this.props.password}
+						placeholder={this.state.PassWord}
 					/>
 
 					<Text>Phone Number</Text>

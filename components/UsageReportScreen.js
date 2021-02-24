@@ -29,18 +29,33 @@ export default class UsageReports extends Component {
 	componentDidMount() {}
 
 	changeDay(date) {
-		let month = date.getMonth();
-		month++;
-		if (month < 10) {
-			month = '0' + month;
-		}
+		let monthIndex = date.getMonth();
+		// monthIndex++;
+		// if (monthIndex < 10) {
+		// 	monthIndex = '0' + monthIndex;
+		// }
+		var months = [
+			'Jan',
+			'Feb',
+			'Mar',
+			'Apr',
+			'May',
+			'Jun',
+			'Jul',
+			'Aug',
+			'Sep',
+			'Oct',
+			'Nov',
+			'Dec',
+		];
+		let month = months[monthIndex];
 		let year = date.getYear() + 1900;
 		let day = date.getDate();
-		// alert(day);
+		// alert(month);
 		this.setState({
 			day: day.toString(),
 			year: year.toString(),
-			month: month.toString(),
+			month: month,
 			daymodal: false,
 		});
 		// alert(year);
@@ -90,7 +105,7 @@ export default class UsageReports extends Component {
 				jsonBody = JSON.stringify({ MealName: this.state.mealname });
 				this.setState({ filteritem: this.state.mealname });
 			}
-			alert(jsonBody);
+			// alert(jsonBody);
 			fetch('https://ripple506.herokuapp.com/PrintUsageReport', {
 				method: 'POST',
 				headers: {
@@ -98,7 +113,7 @@ export default class UsageReports extends Component {
 					'Connection': 'Keep-Alive',
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ 'Year': '2021', 'Month': '02', 'Day': '05' }),
+				body: jsonBody,
 			})
 				// .then((response) => response.json())
 				.then((response) => response.json())
@@ -108,6 +123,7 @@ export default class UsageReports extends Component {
 					if (!json.Status) {
 						alert('Error updating!');
 					} else {
+						// alert()
 						// alert('Usage' + json.Usage);
 						this.setState({ usage: json.Usage });
 					}
@@ -121,7 +137,7 @@ export default class UsageReports extends Component {
 			this.state.usage +
 			' items for ' +
 			this.state.filtermode +
-			' ' +
+			': ' +
 			this.state.filteritem
 		);
 	}

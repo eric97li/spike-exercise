@@ -5,12 +5,13 @@ import {
 	View,
 	Text,
 	ScrollView,
+	StyleSheet,
 } from 'react-native';
 import ActiveOrderComponent from './ActiveOrderComponent';
 export default class ActiveOrdersScreen extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { orders: [] };
+		this.state = { orders: [], activemode: true };
 	}
 
 	componentDidMount() {
@@ -25,14 +26,15 @@ export default class ActiveOrdersScreen extends Component {
 	// 	this.fetchData();
 	// }
 	fetchData() {
-		fetch('https://ripple506.herokuapp.com/ViewActiveOrders', {
+		// console.log('FETCHING DATA CALLED');
+		fetch('https://ripple506.herokuapp.com/PrintOrderByPriority', {
 			method: 'POST',
 			headers: {
 				'Accept': '*/*',
 				'Connection': 'Keep-Alive',
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ UserName: 'JunyuTest' }),
+			body: JSON.stringify({}),
 		})
 			// .then((response) => response.json())
 			.then((response) => response.json())
@@ -42,7 +44,9 @@ export default class ActiveOrdersScreen extends Component {
 				this.setState({ orders: json });
 			});
 	}
-
+	// refreshOrders(){
+	// 	this.fetchData();
+	// }
 	getOrderItems() {
 		const { orders } = this.state;
 		let orderComponents = [];
@@ -54,7 +58,9 @@ export default class ActiveOrdersScreen extends Component {
 				<ActiveOrderComponent
 					orderCallback={() => this.fetchData()}
 					key={i}
-					orderID={orders[i]}
+					order={orders[i]}
+					activemode={this.state.activemode}
+					// refreshOrders={() => this.refreshOrders()}
 				/>
 			);
 		}
@@ -64,6 +70,7 @@ export default class ActiveOrdersScreen extends Component {
 		return orderComponents;
 	}
 	render() {
+		// console.log('ACTIVE MODE: ' + this.state.activemode);
 		return (
 			<ScrollView>
 				<View
@@ -77,9 +84,19 @@ export default class ActiveOrdersScreen extends Component {
 						alignItems: 'center',
 					}}>
 					<Text
-						style={{ fontWeight: '700', fontSize: 30, paddingBottom: '10%' }}>
+						style={{ fontWeight: '700', fontSize: 30, paddingBottom: '5%' }}>
 						Active Orders!
 					</Text>
+					<TouchableOpacity
+						title='Set Active Order'
+						style={styles.button}
+						onPress={() =>
+							this.setState({ activemode: !this.state.activemode })
+						}>
+						<Text style={{ fontWeight: '700', fontSize: 20 }}>
+							Toggle Active Mode from: {this.state.activemode.toString()}{' '}
+						</Text>
+					</TouchableOpacity>
 
 					{this.getOrderItems()}
 
@@ -89,3 +106,15 @@ export default class ActiveOrdersScreen extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	button: {
+		justifyContent: 'center',
+		alignItems: 'center', // Centered horizontally
+		justifyContent: 'center', //Centered vertically
+		backgroundColor: 'orange',
+		padding: 5,
+
+		marginBottom: '5%',
+	},
+});

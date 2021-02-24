@@ -20,17 +20,14 @@ export default class OrderComponent extends React.Component {
 			carmodal: false,
 			order: {},
 		};
+		this.fetchData = this.fetchData.bind(this);
+		this.increasePriority = this.increasePriority.bind(this);
+		this.decreasePriority = this.decreasePriority.bind(this);
 	}
 	compilePDF() {
 		console.log('Compile PDF Functionality Yet to be Implemented');
 	}
 	markComplete() {
-		console.log('MARK COMPLETE CALLED');
-		console.log(
-			JSON.stringify({ OrderID: this.props.orderID, Status: 'Complete' })
-		);
-		alert('Waiting API for functionality');
-		return;
 		fetch('https://ripple506.herokuapp.com/UpdateOrder', {
 			method: 'POST',
 			headers: {
@@ -38,7 +35,10 @@ export default class OrderComponent extends React.Component {
 				'Connection': 'Keep-Alive',
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ OrderID: this.props.orderID, Status: 'Complete' }),
+			body: JSON.stringify({
+				OrderID: this.props.order.OrderID,
+				Status: 'Complete',
+			}),
 		})
 			// .then((response) => response.json())
 			.then((response) => response.json())
@@ -48,25 +48,71 @@ export default class OrderComponent extends React.Component {
 				// this.setState({ order: json });
 				// console.log(json);
 				if (json.Status) {
-					alert('Order marked Complete');
+					this.props.orderCallback();
+				} else {
+					alert('Error: Server down!');
 				}
 			});
 	}
-	prioritizeOrder() {
-		alert('Functionality not implemented');
+	increasePriority() {
+		if (this.props.order.Priority === '1') {
+			alert('Order is at max Priority!');
+			return;
+		}
+
+		fetch('https://ripple506.herokuapp.com/UpdateOrderPriority', {
+			method: 'POST',
+			headers: {
+				'Accept': '*/*',
+				'Connection': 'Keep-Alive',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				OrderID: this.props.order.OrderID,
+				Priority: (parseInt(this.props.order.Priority) - 1).toString(),
+			}),
+		})
+			.then((response) => response.json())
+
+			.then(async (json) => {
+				// console.log(json);
+				// alert(json.Reason);
+				if (json.Status) {
+					this.props.orderCallback();
+				}
+			});
+	}
+	decreasePriority() {
+		if (this.props.order.Priority === '9') {
+			alert('Order is at min Priority!');
+			return;
+		}
+
+		fetch('https://ripple506.herokuapp.com/UpdateOrderPriority', {
+			method: 'POST',
+			headers: {
+				'Accept': '*/*',
+				'Connection': 'Keep-Alive',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				OrderID: this.props.order.OrderID,
+				Priority: (parseInt(this.props.order.Priority) + 1).toString(),
+			}),
+		})
+			.then((response) => response.json())
+
+			.then(async (json) => {
+				// alert(json.Reason);
+				if (json.Status) {
+					this.props.orderCallback();
+				}
+			});
 	}
 
 	componentDidMount() {
-		// this._unsubscribe = this.props.navigation.addListener('focus', () => {
 		this.fetchData();
-		// });
 	}
-	// componentWillUnmount() {
-	// 	this._unsubscribe();
-	// }
-	// orderCallback() {
-	// 	this.fetchData();
-	// }
 
 	//Get Receipt data
 	fetchData() {
@@ -77,7 +123,7 @@ export default class OrderComponent extends React.Component {
 				'Connection': 'Keep-Alive',
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ OrderID: this.props.orderID }),
+			body: JSON.stringify({ OrderID: this.props.order.OrderID }),
 		})
 			.then((response) => response.json())
 
@@ -93,20 +139,25 @@ export default class OrderComponent extends React.Component {
 
 		//DEBUG HERE
 		const { order } = this.state;
-		// console.log(order);
-		// console.log(this.state.order);
+
 		let pickuptime = '';
 		let createdtime = '';
-		if (order.TimetoPickUp !== '') {
+		if (
+			order.TimetoPickUp === undefined ||
+			order.TimeToPickup === '' ||
+			!order.TimetoPickUp.toString().length
+		) {
+			// console.log('IF' + order.TimetoPickUp);
+			pickuptime = 'Not Scheduled!';
+		} else if (order.TimetoPickUp !== '') {
 			// console.log(order.TimetoPickUp);
 			pickuptime = moment(order.TimetoPickUp).calendar();
-			// console.log(moment(order.TimetoPickUp).calendar());
+			if (pickuptime === 'Invalid date') {
+				pickuptime = 'Not Scheduled!';
+			}
 		}
 		if (order.CreatedTime !== '') {
-			// console.log(order.CreatedTime);
-
 			createdtime = moment(order.CreatedTime).calendar();
-			// console.log(moment(order.CreatedTime).calendar());
 		}
 
 		let carmodal = (
@@ -120,27 +171,95 @@ export default class OrderComponent extends React.Component {
 				}}
 				closeDialog={() => this.setState({ carmodal: false })}></DialogInput>
 		);
+
+		// console.log(new Date());
+		// console.log(order.TimetoPickUp);
+		// console.log('Active mode' + this.props.activemode);
+		// console.log(Date.parse(order.TimetoPickUp) > new Date());
+		// console.log(Date.parse(order.TimetoPickUp) < new Date());
+		//If we aren't in active mode and the pickup time is not scheduled yet
+		//or after today, don't display
+
+		if (
+			(pickuptime === 'Not Scheduled!' ||
+				this.props.order.Status === 'Incomplete' ||
+				Date.parse(order.TimetoPickUp) > new Date()) &&
+			!this.props.activemode
+		) {
+			// console.log('if' + order.TimetoPickUp);
+
+			return <></>;
+		}
+		//If we are in active mode and the time to pickup is before, don't display
+		else if (
+			this.props.order.Status === 'Complete' &&
+			Date.parse(order.TimetoPickUp) < new Date() &&
+			this.props.activemode
+		) {
+			// console.log('else ' + order.TimetoPickUp);
+			return <></>;
+		}
+		// else {
+		// 	console.log('ELSE:');
+		// 	console.log(this.props.order.Status);
+		// 	console.log(Date.parse(order.TimetoPickUp) > new Date());
+		// 	console.log(this.props.activemode);
+		// }
+		let carDescription = 'No Car Description';
+		if (order.CarDescription !== '') {
+			carDescription = order.CarDescription;
+		}
 		return (
 			<View style={styles.mealcard}>
 				{carmodal}
 				<View style={styles.row}>
-					<Text style={{ fontWeight: '500', fontSize: 20 }}>
-						Created at: {createdtime}
+					<Text style={{ fontWeight: '500', fontSize: 16 }}>
+						Order #{this.props.order.OrderID}
 					</Text>
+				</View>
+				<View style={styles.row}>
+					<View style={styles.row}>
+						<Text style={{ fontWeight: '500', fontSize: 36 }}>Priority:</Text>
+						<Text style={{ fontWeight: '600', fontSize: 36 }}>
+							{this.props.order.Priority}
+						</Text>
+					</View>
 					<TouchableOpacity
-						style={styles.buttonright}
+						style={styles.buttongreen}
 						title='Priority'
-						onPress={this.prioritizeOrder}>
-						<Text>Prioritize Order </Text>
+						onPress={this.increasePriority}>
+						<Text>Increase Priority! </Text>
 					</TouchableOpacity>
 				</View>
-				<Text style={{ fontWeight: '400', fontSize: 16 }}>
-					Pick up Time: {pickuptime}
-				</Text>
 
 				<View style={styles.row}>
-					<Text>Car Type Picking Up: {order.CarDescription}</Text>
+					<View style={styles.row}>
+						<Text style={{ fontWeight: '400', fontSize: 20 }}>Status:</Text>
+						<Text style={{ fontWeight: '600', fontSize: 20 }}>
+							{this.props.order.Status}
+						</Text>
+					</View>
+					<TouchableOpacity
+						style={styles.buttonred}
+						title='Priority'
+						onPress={this.decreasePriority}>
+						<Text>Decrease Priority! </Text>
+					</TouchableOpacity>
 				</View>
+
+				<View style={styles.row}>
+					<Text style={{ fontWeight: '400', fontSize: 20 }}>Pickup Time:</Text>
+					<Text style={{ fontWeight: '600', fontSize: 20 }}>{pickuptime}</Text>
+				</View>
+				<View style={styles.row}>
+					<Text style={{ fontWeight: '400', fontSize: 20 }}>Car:</Text>
+					<Text style={{ fontWeight: '600', fontSize: 20 }}>
+						{carDescription}
+					</Text>
+				</View>
+				<Text style={{ fontWeight: '500', fontSize: 16 }}>
+					Created at: {createdtime}
+				</Text>
 
 				<TouchableOpacity
 					style={styles.button}
@@ -174,9 +293,19 @@ const styles = StyleSheet.create({
 		borderColor: '#5EA9F4',
 		borderWidth: 2,
 	},
-	buttonright: {
+	buttongreen: {
 		// alignItems: 'center',
-		backgroundColor: '#5EA9F4',
+		backgroundColor: 'limegreen',
+		padding: 5,
+		position: 'absolute',
+		alignItems: 'center', // Centered horizontally
+		justifyContent: 'center', //Centered vertically
+
+		right: 0,
+	},
+	buttonred: {
+		// alignItems: 'center',
+		backgroundColor: 'red',
 		padding: 5,
 		position: 'absolute',
 		alignItems: 'center', // Centered horizontally
@@ -200,7 +329,7 @@ const styles = StyleSheet.create({
 	},
 	row: {
 		flexDirection: 'row',
-		paddingBottom: 10,
+		paddingBottom: 6,
 	},
 	spaceVertical: {
 		height: 15,
