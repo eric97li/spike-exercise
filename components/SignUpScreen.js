@@ -61,7 +61,7 @@ export default class SignUp extends Component {
 		// 	'Address': 'feafa',
 		// };
 		console.log(JSON.stringify(data));
-		fetch('https://ripple506.herokuapp.com/CreateAccount/', {
+		fetch('https://ripple506.herokuapp.com/CreateAccount', {
 			method: 'POST',
 			headers: {
 				'Accept': '*/*',
