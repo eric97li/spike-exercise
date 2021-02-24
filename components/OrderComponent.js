@@ -12,9 +12,9 @@ import moment from 'moment';
 import DialogInput from 'react-native-dialog-input';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
-// import { Print } from 'expo-print';
 import * as Print from 'expo-print';
+import * as Sharing from 'expo-sharing';
+
 export default class OrderComponent extends React.Component {
 	constructor(props) {
 		super(props);
@@ -27,42 +27,25 @@ export default class OrderComponent extends React.Component {
 		};
 	}
 	async compilePDF() {
-		// console.log('Compile PDF Functionality Yet to be Implemented');
-		// // async createPDF() {
-		// let options = {
-		// 	html: '<h1>PDF TEST</h1>',
-		// 	fileName: 'test',
-		// 	directory: 'Documents',
-		// };
+		//PDF needs to include everything. Try to format it like an actual receipt
+		//Center, receipt. Include costs and food items.
 
-		// try {
-		// 	let file = await RNHTMLtoPDF.convert(options);
-		// 	// console.log(file.filePath);
-		// 	alert(file.filePath);
-		// } catch (err) {
-		// 	console.log(err);
-		// }
+		//Everything can be access by this.props.blank
+		//this.props.order.OrderID
+		//this.props.order.FoodItems
+		//this.props.order. you get the idea
 
-		let filePath = await Print.printToFileAsync({
-			html: '<h1>PDF TEST</h1>',
-			width: 612,
-			height: 792,
-			base64: false,
-		});
-
-		alert('PDF Generated', filePath.uri);
-
-		//   }
+		const html = `<h1> Your Meal Receipt </h1>`;
+		const { uri } = await Print.printToFileAsync({ html });
+		Sharing.shareAsync(uri);
 	}
 	changeTimetoPickUp(time) {
 		// console.log(time);
 		if (time < new Date()) {
 			alert('Invalid Date. Pick a time after today.');
-		}
-		// else if (this.props.Status === 'Incomplete') {
-		// 	alert("Order is not completed yet. Can't pickup order yet.");
-		// }
-		else {
+		} else if (this.props.Status === 'Incomplete') {
+			alert("Order is not completed yet. Can't pickup order yet.");
+		} else {
 			this.setState({ TimetoPickUp: time, timemodal: false });
 			console.log(
 				JSON.stringify({ OrderID: this.props.OrderID, TimetoPickUp: time })
