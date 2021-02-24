@@ -167,33 +167,12 @@ export default class SignUp extends Component {
 				</Picker>
 				<View style={{ marginTop: '10%', width: '80%' }}>
 					<TouchableOpacity
-						style={{
-							borderWidth: 1,
-							height: 42,
-							width: '80%',
-							justifyContent: 'center',
-							alignItems: 'center',
-							borderRadius: 40,
-							backgroundColor: 'black',
-							alignSelf: 'center',
-							textAlign: 'center',
-						}}
+						style={styles.signupButton}
 						onPress={() => this.signup_field()}>
 						<Text style={{ color: 'white' }}> Sign Up </Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						style={{
-							borderWidth: 1,
-							height: 42,
-							width: '80%',
-							justifyContent: 'center',
-							alignItems: 'center',
-							borderRadius: 40,
-							backgroundColor: 'white',
-							alignSelf: 'center',
-							textAlign: 'center',
-							marginTop: 10,
-						}}
+						style={styles.returnButton}
 						onPress={() => this.goToLogin()}>
 						<Text style={{ color: 'black' }}> Return to Login Screen </Text>
 					</TouchableOpacity>
@@ -210,5 +189,28 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		borderColor: 'black',
 		borderWidth: 1,
+	},
+	signupButton: {
+		borderWidth: 1,
+		height: 42,
+		width: '80%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 40,
+		backgroundColor: 'limegreen',
+		alignSelf: 'center',
+		textAlign: 'center',
+	},
+	returnButton: {
+		marginTop: 20,
+		borderWidth: 1,
+		height: 42,
+		width: '80%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 40,
+		backgroundColor: 'orange',
+		alignSelf: 'center',
+		textAlign: 'center',
 	},
 });

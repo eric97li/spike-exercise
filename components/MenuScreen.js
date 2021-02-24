@@ -61,14 +61,8 @@ export default class MenuScreen extends Component {
 	}
 
 	setModalVisible = () => {
-<<<<<<< HEAD
-		console.log(this.state.modalVisible);
 		this.setState({ modalVisible: !this.state.modalVisible });
 	};
-=======
-		this.setState({modalVisible: !this.state.modalVisible});
-	}
->>>>>>> 231a129a90b7568837faa40845889e1424077e57
 
 	setEditModalVisible = (mealName, picture, cost, availability) => {
 		this.setState({ editModalVisible: !this.state.editModalVisible });
@@ -178,45 +172,30 @@ export default class MenuScreen extends Component {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-<<<<<<< HEAD
 					'UserName': this.props.username,
 					'FoodItems': this.state.order,
 					'DateCreated': new Date(),
 				}),
 			}).then((response) => {
-				// alert(response.json());
-				// clear the order queue
-				this.setState({ order: [] });
-				alert('Order created!');
-			});
-=======
-					"UserName": this.props.username,
-					"FoodItems": this.state.order,
-					"DateCreated": new Date()
-					})
-			})
-			.then(response => {
 				return fetch('https://ripple506.herokuapp.com/GetAccountInfo', {
 					method: 'POST',
 					headers: {
-						'Content-Type': 'application/json'
+						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
-						"UserName": this.props.username
-					})
+						'UserName': this.props.username,
+					}),
 				})
-				.then(response => response.json())
-				.then(response => {
-					alert("Order created! Payment confirmed with " + response.PaymentType)
-					
-					// clear the order queue
-					this.setState({order: []})
-				})
+					.then((response) => response.json())
+					.then((response) => {
+						alert(
+							'Order created! Payment confirmed with ' + response.PaymentType
+						);
 
-			})
-
-			
->>>>>>> 231a129a90b7568837faa40845889e1424077e57
+						// clear the order queue
+						this.setState({ order: [] });
+					});
+			});
 		}
 	};
 
@@ -293,7 +272,6 @@ export default class MenuScreen extends Component {
 	};
 
 	getBuyButton = (mealID, mealName) => {
-<<<<<<< HEAD
 		if (this.props.role == 'Customer') {
 			return (
 				<TouchableOpacity style={[styles.updateButton]}>
@@ -302,7 +280,7 @@ export default class MenuScreen extends Component {
 						onPress={() => {
 							this.addItemToOrder(mealID, mealName);
 						}}>
-						Buy
+						Add to order
 					</Text>
 				</TouchableOpacity>
 			);
@@ -312,39 +290,21 @@ export default class MenuScreen extends Component {
 	getCreateOrderButton = () => {
 		if (this.props.role == 'Customer') {
 			return (
-				<TouchableOpacity style={[styles.addButton]}>
-					<Text
-						style={styles.buttonText}
-						onPress={() => {
-							this.createOrder();
-						}}>
-						Create Order
+				<View>
+					<Text style={{ marginBottom: 10, fontSize: '20' }}>
+						Current Order: {this.state.orderNames}
 					</Text>
-				</TouchableOpacity>
+					<TouchableOpacity style={[styles.addButton]}>
+						<Text
+							style={styles.buttonText}
+							onPress={() => {
+								this.createOrder();
+							}}>
+							Finalize order
+						</Text>
+					</TouchableOpacity>
+				</View>
 			);
-=======
-		if(this.props.role == "Customer") {
-			return (<TouchableOpacity style={[styles.updateButton]}> 
-				<Text style={styles.buttonText} onPress={()=>{this.addItemToOrder(mealID, mealName);}}>
-				  Add to order
-				</Text>
-				  </TouchableOpacity>
-				)
-		}
-	}
-
-	getCreateOrderButton= () => {
-		if(this.props.role == "Customer") {
-			return (<View>
-			<Text>Current order: {this.state.orderNames}</Text>	
-			<TouchableOpacity style={[styles.addButton]}> 
-				<Text style={styles.buttonText} onPress={()=>{this.createOrder();}}>
-				  Finalize order
-				</Text>
-				  </TouchableOpacity>
-				  </View>
-				)
->>>>>>> 231a129a90b7568837faa40845889e1424077e57
 		}
 	};
 
@@ -361,10 +321,19 @@ export default class MenuScreen extends Component {
 
 		return (
 			<View>
-<<<<<<< HEAD
 				<Modal visible={modalVisible}>
 					<View>
-						<Text style={{ fontSize: 30 }}>Add Item</Text>
+						<Text
+							style={{
+								fontSize: 30,
+								marginTop: '50%',
+								justifyContent: 'center',
+								alignSelf: 'center',
+								alignContent: 'center',
+								alignItems: 'center',
+							}}>
+							Add Item
+						</Text>
 
 						<View
 							style={{
@@ -463,7 +432,17 @@ export default class MenuScreen extends Component {
 
 				<Modal visible={editModalVisible}>
 					<View>
-						<Text style={{ fontSize: 30 }}>Update Item</Text>
+						<Text
+							style={{
+								fontSize: 30,
+								marginTop: '50%',
+								justifyContent: 'center',
+								alignSelf: 'center',
+								alignContent: 'center',
+								alignItems: 'center',
+							}}>
+							Update Item
+						</Text>
 
 						<View
 							style={{
@@ -570,7 +549,17 @@ export default class MenuScreen extends Component {
 
 				<Modal visible={inventoryModalVisible}>
 					<View>
-						<Text style={{ fontSize: 30 }}>Update Item Status</Text>
+						<Text
+							style={{
+								fontSize: 30,
+								marginTop: '50%',
+								justifyContent: 'center',
+								alignSelf: 'center',
+								alignContent: 'center',
+								alignItems: 'center',
+							}}>
+							Update Item Status
+						</Text>
 
 						<View
 							style={{
@@ -655,234 +644,11 @@ export default class MenuScreen extends Component {
 								style={{ alignItems: 'center', flexDirection: 'column' }}>
 								{/* <Button style={{borderRadius:50}} color="green" title="Add Item" onPress={()=>{this.setModalVisible(!modalVisible);}}/> */}
 								{/* <TouchableOpacity style={[styles.addButton, {display}]}> 
-=======
-
-			<Modal visible={modalVisible}>
-
-			<View>
-          <Text style={{fontSize: 30, marginTop:"50%", justifyContent: "center"
-              , alignSelf: "center", alignContent: "center", alignItems: "center"}}>Add Item</Text>
-
-          <View style={{width: "100%", justifyContent: "center"
-              , alignSelf: "center", alignContent: "center", alignItems: "center"
-              }}>
-
-          <TextInput multiline={true} placeholder={"Meal name"}
-          onChangeText={(value)=> this.setState({mealName: value})}
-          style={{ height: 42, width: "80%", borderBottomWidth: 1}}
-          />
-
-          
-          <TextInput style={{marginTop: "40%"}} placeholder={"Meal cost"}
-          onChangeText={(value)=> this.setState({cost: value})}
-          style={{ height: 42, width: "80%", borderBottomWidth: 1}}
-          />
-
-		  {/* picture */}
-		  <TextInput style={{marginTop: "40%"}} placeholder={"Picture"}
-          onChangeText={(value)=> this.setState({picture: value})}
-          style={{ height: 42, width: "80%", borderBottomWidth: 1}}
-          />
-
-		  <View style={{marginBottom:"5%"}}></View>
-
-		 {/* availability dropdown */}
-		 <DropDownPicker items={[
-			 {label: 'Available', value: 'Available'},
-			 {label: 'Unavailable', value: 'Unavailable'}
-			 ]}
-			 placeholder={'Available'} 
-			 defaultValue={this.state.availability}
-			 containerStyle={{width: 150, height: 40}}
-			 style={{backgroundColor: '#fafafa'}}
-			 itemStyle={{
-				 justifyContent: 'flex-start'
-			 }}
-			 dropDownStyle={{backgroundColor: '#fafafa'}}
-    		 onChangeItem={item => this.setState({
-        	 availability: item.value
-    		 })}
-			 />
-
-          <View style={{marginTop: "5%", width: "80%"}}>
-                <TouchableOpacity style={{ borderWidth : 1, height : 42, width: "60%"
-              , justifyContent : "center", alignItems: "center", borderRadius: 5,
-              backgroundColor: "black", alignSelf: "center", textAlign : "center"
-              }}
-              onPress={()=>{this.addItem();}}
-              >
-                <Text style={{color: "white"}}> Add </Text>
-                </TouchableOpacity>
-            </View>
-            <View style={{marginTop: "2.5%", width: "80%"}}>
-                <TouchableOpacity style={{ borderWidth : 1, height : 42, width: "60%"
-              , justifyContent : "center", alignItems: "center", borderRadius: 5,
-              backgroundColor: "white", alignSelf: "center", textAlign : "center"
-              }}
-              onPress={()=>{this.setModalVisible();}}
-              >
-                <Text style={{color: "black"}}> Close </Text>
-                </TouchableOpacity>
-            </View>
-
-            </View>
-          
-          </View>
-
-
-			</Modal>
-
-
-			<Modal visible={editModalVisible}>
-
-			<View>
-          <Text style={{fontSize: 30, marginTop:"50%", justifyContent: "center"
-              , alignSelf: "center", alignContent: "center", alignItems: "center"}}>Update Item</Text>
-
-          <View style={{width: "100%", justifyContent: "center"
-              , alignSelf: "center", alignContent: "center", alignItems: "center"
-              }}>
-              
-              <Text style={{marginTop: "2.5%", fontSize: 20}}>Meal name: {this.state.mealName}</Text>
-                <TextInput placeholder={this.state.mealName}
-                onChangeText={(value)=> this.setState({editMealName: value})}
-                style={{ height: 42, width: "80%", borderBottomWidth: 1}}
-                />
-
-                <TextInput style={{marginTop: "40%"}} placeholder={this.state.cost}
-                onChangeText={(value)=> this.setState({editCost: value})}
-                style={{ height: 42, width: "80%", borderBottomWidth: 1}}
-                />
-
-
-				{/* picture */}
-		  		<TextInput style={{marginTop: "40%"}} placeholder={this.state.picture}
-          		onChangeText={(value)=> this.setState({editPicture: value})}
-          		style={{ height: 42, width: "80%", borderBottomWidth: 1}}
-          		/>
-
-				<View style={{marginBottom:"5%"}}></View>
-
-		 		{/* availability dropdown */}
-				 <DropDownPicker items={[
-			 	{label: 'Available', value: 'Available'},
-			 	{label: 'Unavailable', value: 'Unavailable'}
-			 	]} 
-				 placeholder={'Available'}
-				 defaultValue={this.state.availability}
-			 	containerStyle={{width: 150, height: 40}}
-			 	style={{backgroundColor: '#fafafa'}}
-			 	itemStyle={{
-				 justifyContent: 'flex-start'
-			 	}}
-			 	dropDownStyle={{backgroundColor: '#fafafa'}}
-    		 	onChangeItem={item => this.setState({
-        	 	availability: item.value
-    		 	})}
-			 	/>
-
-            <View style={{marginTop: "5%", width: "80%"}}>
-                <TouchableOpacity style={{ borderWidth : 1, height : 42, width: "60%"
-              , justifyContent : "center", alignItems: "center", borderRadius: 5 ,
-              backgroundColor: "black", alignSelf: "center", textAlign : "center"
-              }}
-              onPress={()=>{this.updateItem(this.state.editMealName, this.state.editPicture, this.state.editCost, this.state.availability);}}
-              >
-                <Text style={{color: "white"}}> Update </Text>
-                </TouchableOpacity>
-            </View>
-
-                <View style={{marginTop: "2.5%", width: "80%"}}>
-                <TouchableOpacity  style={{ borderWidth : 1, height : 42, width: "60%"
-              , justifyContent : "center", alignItems: "center", borderRadius: 5 ,
-              backgroundColor: "white", alignSelf: "center", textAlign : "center"
-              }}
-              onPress={()=>{this.manageEditModalVisible();}}
-              >
-                <Text style={{color: "black"}}> Close </Text>
-                </TouchableOpacity>
-            </View>
-          
-          </View>
-
-          </View>
-
-			</Modal>
-
-			<Modal visible={inventoryModalVisible}>
-
-			<View>
-          <Text style={{fontSize: 30, marginTop:"50%", justifyContent: "center"
-              , alignSelf: "center", alignContent: "center", alignItems: "center"}}>Update Item Status</Text>
-
-          <View style={{width: "100%", justifyContent: "center"
-              , alignSelf: "center", alignContent: "center", alignItems: "center"
-              }}>
-              
-              <Text style={{marginTop: "2.5%", fontSize: 20}}>Meal name: {this.state.mealName}</Text>
-
-		 		{/* availability dropdown */}
-				 <DropDownPicker items={[
-			 	{label: 'Available', value: 'Available'},
-			 	{label: 'Unavailable', value: 'Unavailable'}
-			 	]} 
-				 placeholder={'Available'}
-				 defaultValue={this.state.availability}
-			 	containerStyle={{width: 150, height: 40}}
-			 	style={{backgroundColor: '#fafafa'}}
-			 	itemStyle={{
-				 justifyContent: 'flex-start'
-			 	}}
-			 	dropDownStyle={{backgroundColor: '#fafafa'}}
-    		 	onChangeItem={item => this.setState({
-        	 	availability: item.value
-    		 	})}
-			 	/>
-
-            <View style={{marginTop: "5%", width: "80%"}}>
-                <TouchableOpacity style={{ borderWidth : 1, height : 42, width: "60%"
-              , justifyContent : "center", alignItems: "center", borderRadius: 5 ,
-              backgroundColor: "black", alignSelf: "center", textAlign : "center"
-              }}
-              onPress={()=>{this.updateItemStatus();}}
-              >
-                <Text style={{color: "white"}}> Update </Text>
-                </TouchableOpacity>
-            </View>
-
-                <View style={{marginTop: "2.5%", width: "80%"}}>
-                <TouchableOpacity  style={{ borderWidth : 1, height : 42, width: "60%"
-              , justifyContent : "center", alignItems: "center", borderRadius: 5 ,
-              backgroundColor: "white", alignSelf: "center", textAlign : "center"
-              }}
-              onPress={()=>{this.manageInventoryModalVisible();}}
-              >
-                <Text style={{color: "black"}}> Close </Text>
-                </TouchableOpacity>
-            </View>
-          
-          </View>
-
-          </View>
-
-			</Modal>
-			
-			<View>
-				{<ListItem bottomDivider>
-					<ListItem.Content style={{alignItems:"center", flexDirection:"column"}}>
-					{/* <Button style={{borderRadius:50}} color="green" title="Add Item" onPress={()=>{this.setModalVisible(!modalVisible);}}/> */}
-						{/* <TouchableOpacity style={[styles.addButton, {display}]}> 
->>>>>>> 231a129a90b7568837faa40845889e1424077e57
   							<Text style={styles.buttonText} onPress={()=>{this.setModalVisible(!modalVisible);}}>
     							Add Item
   							</Text>
 						</TouchableOpacity> */}
-<<<<<<< HEAD
 								{this.getAddButton()}
-
-								<ListItem.Subtitle>
-									<Text>{this.state.orderNames}</Text>
-								</ListItem.Subtitle>
 
 								{this.getCreateOrderButton()}
 							</ListItem.Content>
@@ -904,36 +670,6 @@ export default class MenuScreen extends Component {
 							</ListItem.Content>
 							{/* <Button  style={{borderRadius:50}} color="orange" title="Update Item" onPress={()=>{this.setEditModalVisible(!editModalVisible, x.MealName, x.Picture, x.Cost, x.Availability);}}/> */}
 							{/* <TouchableOpacity style={[styles.updateButton, {display}]}> 
-=======
-						{this.getAddButton()}		
-
-						{this.getCreateOrderButton()}
-						
-					</ListItem.Content>
-				</ListItem>
-				}
-			</View>
-
-			<ScrollView contentContainerStyle={{paddingBottom: 60}}>
-				          {
-            this.state.items.map((x, i) => (
-           
-              <ListItem key={i} bottomDivider>
-                <ListItem.Content>
-                  <ListItem.Title style={{fontSize: 20, flexDirection: "row"}}>
-                    {x.MealName} 
-					
-		
-
-                    </ListItem.Title>
-					<ListItem.Subtitle>{x.Availability}</ListItem.Subtitle>   
-					<ListItem.Subtitle>{x.Cost}</ListItem.Subtitle> 
-					<ListItem.Subtitle>{x.MealID}</ListItem.Subtitle> 
-					<ListItem.Subtitle>{x.Picture}</ListItem.Subtitle> 
-                </ListItem.Content>
-				{/* <Button  style={{borderRadius:50}} color="orange" title="Update Item" onPress={()=>{this.setEditModalVisible(!editModalVisible, x.MealName, x.Picture, x.Cost, x.Availability);}}/> */}
-					{/* <TouchableOpacity style={[styles.updateButton, {display}]}> 
->>>>>>> 231a129a90b7568837faa40845889e1424077e57
   							<Text style={styles.buttonText} onPress={()=>{this.setEditModalVisible(!editModalVisible, x.MealName, x.Picture, x.Cost, x.Availability);}}>
     							Update Item
   							</Text>
@@ -966,12 +702,13 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		height: 42,
 		width: '35%',
-		backgroundColor: 'green',
+		backgroundColor: 'limegreen',
 		borderRadius: 5,
 		justifyContent: 'center',
 		alignItems: 'center',
 		alignSelf: 'center',
 		textAlign: 'center',
+		padding: 4,
 	},
 
 	updateButton: {

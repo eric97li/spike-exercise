@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, TextInput, View, Text } from 'react-native';
+import {
+	TouchableOpacity,
+	TextInput,
+	View,
+	Text,
+	StyleSheet,
+} from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 
 class LoginScreen extends Component {
@@ -109,17 +115,7 @@ class LoginScreen extends Component {
 				/>
 				<View style={{ marginTop: '10%', width: '80%' }}>
 					<TouchableOpacity
-						style={{
-							borderWidth: 1,
-							height: 42,
-							width: '80%',
-							justifyContent: 'center',
-							alignItems: 'center',
-							borderRadius: 40,
-							backgroundColor: 'black',
-							alignSelf: 'center',
-							textAlign: 'center',
-						}}
+						style={styles.loginButton}
 						onPress={() => this.validate_field()}>
 						<Text style={{ color: 'white' }}> Login </Text>
 					</TouchableOpacity>
@@ -132,17 +128,7 @@ class LoginScreen extends Component {
 						accessible={true}
 						accessibilityLabel='Sign Up Button'
 						accessibilityHint='Activate to go to sign up page'
-						style={{
-							borderWidth: 1,
-							height: 42,
-							width: '80%',
-							justifyContent: 'center',
-							alignItems: 'center',
-							borderRadius: 40,
-							backgroundColor: 'white',
-							alignSelf: 'center',
-							textAlign: 'center',
-						}}
+						style={styles.signupButton}
 						onPress={() => this.goToSignUp()}>
 						<Text style={{ color: 'black' }}> Sign Up </Text>
 					</TouchableOpacity>
@@ -157,3 +143,28 @@ class LoginScreen extends Component {
 }
 // export default withNavigationFocus(LoginScreen);
 export default LoginScreen;
+
+const styles = StyleSheet.create({
+	loginButton: {
+		borderWidth: 1,
+		height: 42,
+		width: '80%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 40,
+		backgroundColor: 'limegreen',
+		alignSelf: 'center',
+		textAlign: 'center',
+	},
+	signupButton: {
+		borderWidth: 1,
+		height: 42,
+		width: '80%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 40,
+		backgroundColor: 'orange',
+		alignSelf: 'center',
+		textAlign: 'center',
+	},
+});
