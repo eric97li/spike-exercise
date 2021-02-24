@@ -28,7 +28,13 @@ export default class OrderComponent extends React.Component {
 	}
 	async compilePDF() {
 		//PDF needs to include everything. Try to format it like an actual receipt
-		//Center, receipt. Include costs and food items. Everyhting
+		//Center, receipt. Include costs and food items.
+
+		//Everything can be access by this.props.blank
+		//this.props.order.OrderID
+		//this.props.order.FoodItems
+		//this.props.order. you get the idea
+
 		const html = `<h1> Your Meal Receipt </h1>`;
 		const { uri } = await Print.printToFileAsync({ html });
 		Sharing.shareAsync(uri);
