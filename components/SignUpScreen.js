@@ -20,6 +20,11 @@ export default class SignUp extends Component {
 			preferredPayment: '',
 		};
 	}
+	goToLogin() {
+		// this.props.navigation.pop();
+
+		this.props.navigation.replace('Login');
+	}
 	signup_field = () => {
 		const {
 			username,
@@ -51,15 +56,7 @@ export default class SignUp extends Component {
 			Phone: phonenumber,
 			Address: address,
 			PaymentType: preferredPayment,
-			//payment info to be determine
 		};
-		// const data = {
-		// 	'UserName': 'Titus',
-		// 	'Password': 'feafaef',
-		// 	'Role': 'Customer',
-		// 	'Phone': 'feafae',
-		// 	'Address': 'feafa',
-		// };
 		console.log(JSON.stringify(data));
 		fetch('https://ripple506.herokuapp.com/CreateAccount', {
 			method: 'POST',
@@ -69,17 +66,18 @@ export default class SignUp extends Component {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(data),
-			// }).then((response) => console.log(response));
 		})
 			.then((response) => response.json())
-			.then((json) => {
+			.then(async (json) => {
 				console.log(json);
 				if (json.Status) {
 					alert('Profile created');
 					//Navigate to login page
+					await this.props.navigation.replace('Login');
+
 					this.props.setUsernameCallBack(username);
 					this.props.setPasswordCallBack(password);
-					this.props.navigation.navigate('Login');
+					this.props.navigation.navigate('Badger Bytes');
 				} else {
 					alert('Invalid username. Try another one.');
 				}
@@ -99,13 +97,14 @@ export default class SignUp extends Component {
 				}}>
 				<TextInput
 					autoCapitalize='none'
-					placeholder={'Username2'}
+					placeholder={'Username'}
 					onChangeText={(value) => this.setState({ username: value })}
 					style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
 				/>
 				<TextInput
 					autoCapitalize='none'
 					placeholder={'Password'}
+					secureTextEntry={true}
 					onChangeText={(value) => this.setState({ password: value })}
 					style={{
 						height: 42,
@@ -181,6 +180,22 @@ export default class SignUp extends Component {
 						}}
 						onPress={() => this.signup_field()}>
 						<Text style={{ color: 'white' }}> Sign Up </Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={{
+							borderWidth: 1,
+							height: 42,
+							width: '80%',
+							justifyContent: 'center',
+							alignItems: 'center',
+							borderRadius: 40,
+							backgroundColor: 'white',
+							alignSelf: 'center',
+							textAlign: 'center',
+							marginTop: 10,
+						}}
+						onPress={() => this.goToLogin()}>
+						<Text style={{ color: 'black' }}> Return to Login Screen </Text>
 					</TouchableOpacity>
 				</View>
 			</View>

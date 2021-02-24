@@ -1,26 +1,45 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, TextInput, View, Text } from 'react-native';
+import { withNavigationFocus } from 'react-navigation';
 
-export default class Login extends Component {
+class LoginScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: '',
-			password: '',
+			UserName: '',
+			PassWord: '',
 		};
 	}
 
-	validate_field = () => {
-		const { username, password } = this.state;
+	//Allows us to reset stack title
+	componentDidMount() {
+		this._unsubscribe = this.props.navigation.addListener('focus', () => {
+			// console.log('FOCUS');
+			this.props.setScreenTitle('Login');
+		});
+		this.props.navigation.addListener('blur', () => {
+			// console.log('UNFOCUS');
+			this.props.setScreenTitle('Logout');
+		});
+	}
 
-		if (username == '') {
-			alert('Username or password is incorrect!');
+	componentWillUnmount() {
+		// console.log('CWU CALLED');
+		this._unsubscribe();
+		// this.props.setScreenTitle('Logout');
+	}
+
+	validate_field = () => {
+		const { UserName, PassWord } = this.state;
+
+		if (UserName == '') {
+			alert('UserName or PassWord is incorrect!');
 			return false;
-		} else if (password == '') {
-			alert('Username or password is incorrect!');
+		} else if (PassWord == '') {
+			alert('UserName or PassWord is incorrect!');
 			return false;
 		}
-		console.log(JSON.stringify({ UserName: username, PassWord: password }));
+		// console.log(JSON.stringify({ UserName: UserName, PassWord: PassWord }));
 		//check for the credentials entered by user with the api and retrieve account of user
 		fetch('https://ripple506.herokuapp.com/VerifyAccount', {
 			method: 'POST',
@@ -29,16 +48,17 @@ export default class Login extends Component {
 				'Connection': 'Keep-Alive',
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ UserName: username, PassWord: password }),
+			body: JSON.stringify({ UserName: UserName, PassWord: PassWord }),
 		})
 			// .then((response) => response.json())
 			.then((response) => response.json())
 
-			.then((json) => {
-				console.log(json);
+			.then(async (json) => {
+				// console.log(json);
 				if (json.Status) {
-					this.props.setUsernameCallBack(username);
-					this.props.setPasswordCallBack(password);
+					this.props.setUsernameCallBack(UserName);
+					this.props.setPasswordCallBack(PassWord);
+					await this.setState({ UserName: '', PassWord: '' });
 					this.props.navigation.navigate('Badger Bytes');
 				} else {
 					alert('Error logging in!');
@@ -47,7 +67,9 @@ export default class Login extends Component {
 	};
 
 	goToSignUp() {
-		this.props.navigation.navigate('Sign Up');
+		// this.props.navigation.pop();
+
+		this.props.navigation.replace('Sign Up');
 	}
 
 	render() {
@@ -64,13 +86,14 @@ export default class Login extends Component {
 				<TextInput
 					autoCapitalize='none'
 					placeholder={'Username'}
-					onChangeText={(value) => this.setState({ username: value })}
+					onChangeText={(value) => this.setState({ UserName: value })}
 					style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
 				/>
 				<TextInput
 					autoCapitalize='none'
 					placeholder={'Password'}
-					onChangeText={(value) => this.setState({ password: value })}
+					secureTextEntry={true}
+					onChangeText={(value) => this.setState({ PassWord: value })}
 					style={{
 						height: 42,
 						width: '80%',
@@ -80,9 +103,6 @@ export default class Login extends Component {
 				/>
 				<View style={{ marginTop: '10%', width: '80%' }}>
 					<TouchableOpacity
-						accessible={true}
-						accessibilityLabel='Login Button'
-						accessibilityHint='Activate to login'
 						style={{
 							borderWidth: 1,
 							height: 42,
@@ -122,10 +142,12 @@ export default class Login extends Component {
 					</TouchableOpacity>
 				</View>
 
-				{/* <Text>{this.state.username}</Text>
-              <Text>{this.state.password}</Text>
+				{/* <Text>{this.state.UserName}</Text>
+              <Text>{this.state.PassWord}</Text>
               <Text>{this.state.token}</Text> */}
 			</View>
 		);
 	}
 }
+// export default withNavigationFocus(LoginScreen);
+export default LoginScreen;
