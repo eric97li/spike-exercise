@@ -9,6 +9,8 @@ class LoginScreen extends Component {
 			UserName: '',
 			PassWord: '',
 		};
+		this.passInput = React.createRef();
+		this.userInput = React.createRef();
 	}
 
 	//Allows us to reset stack title
@@ -16,6 +18,8 @@ class LoginScreen extends Component {
 		this._unsubscribe = this.props.navigation.addListener('focus', () => {
 			// console.log('FOCUS');
 			this.props.setScreenTitle('Login');
+			this.userInput.current.clear();
+			this.passInput.current.clear();
 		});
 		this.props.navigation.addListener('blur', () => {
 			// console.log('UNFOCUS');
@@ -86,12 +90,14 @@ class LoginScreen extends Component {
 				<TextInput
 					autoCapitalize='none'
 					placeholder={'Username'}
+					ref={this.userInput}
 					onChangeText={(value) => this.setState({ UserName: value })}
 					style={{ height: 42, width: '80%', borderBottomWidth: 1 }}
 				/>
 				<TextInput
 					autoCapitalize='none'
 					placeholder={'Password'}
+					ref={this.passInput}
 					secureTextEntry={true}
 					onChangeText={(value) => this.setState({ PassWord: value })}
 					style={{
