@@ -32,9 +32,9 @@ export default class OrdersScreen extends Component {
 				'Connection': 'Keep-Alive',
 				'Content-Type': 'application/json',
 			},
+			//NEED TO CHANGE THIS
 			body: JSON.stringify({ UserName: 'JunyuTest' }),
 		})
-			// .then((response) => response.json())
 			.then((response) => response.json())
 
 			.then(async (json) => {
@@ -75,7 +75,7 @@ export default class OrdersScreen extends Component {
 	}
 	render() {
 		console.log('RENDER');
-		console.log(this.props);
+		// console.log(this.props);
 		console.log(this.props.username);
 		return (
 			<ScrollView>

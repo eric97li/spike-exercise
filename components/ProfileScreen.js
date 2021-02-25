@@ -107,7 +107,7 @@ export default class ProfileScreen extends Component {
 					</Text>
 					<Text style={{ fontSize: 20 }}>Update Your Account Info Below</Text>
 					<View style={{ height: 50 }}></View>
-					<Text>Username</Text>
+					<Text style={{ fontSize: 18 }}>Username</Text>
 					<TextInput
 						ref={this.userInput}
 						// secureTextEntry={true}
@@ -115,7 +115,7 @@ export default class ProfileScreen extends Component {
 						onChangeText={(text) => this.setState({ UserName: text })}
 						placeholder={this.state.UserName}
 					/>
-					<Text>Password</Text>
+					<Text style={{ fontSize: 18 }}>Password</Text>
 					<TextInput
 						ref={this.passInput}
 						// secureTextEntry={true}
@@ -124,7 +124,7 @@ export default class ProfileScreen extends Component {
 						placeholder={this.state.PassWord}
 					/>
 
-					<Text>Phone Number</Text>
+					<Text style={{ fontSize: 18 }}>Phone Number</Text>
 					<TextInput
 						ref={this.phoneInput}
 						style={styles.input}
@@ -132,7 +132,7 @@ export default class ProfileScreen extends Component {
 						placeholder={this.state.Phone}
 					/>
 
-					<Text>Address</Text>
+					<Text style={{ fontSize: 18 }}>Address</Text>
 					<TextInput
 						ref={this.addressInput}
 						style={styles.input}
@@ -140,7 +140,7 @@ export default class ProfileScreen extends Component {
 						placeholder={this.state.Address}
 					/>
 
-					<Text>Preferred Payment</Text>
+					<Text style={{ fontSize: 18 }}>Preferred Payment</Text>
 					<TextInput
 						ref={this.paymentInput}
 						style={styles.input}
@@ -156,7 +156,7 @@ export default class ProfileScreen extends Component {
 							title='Save Information'
 							// onPress={this.updateProfile}
 							onPress={this.updateProfile}>
-							<Text> Confirm </Text>
+							<Text style={{ fontSize: 18, color: 'white' }}> Confirm </Text>
 						</TouchableOpacity>
 					</View>
 				</View>

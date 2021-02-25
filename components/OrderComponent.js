@@ -228,27 +228,20 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		alignItems: 'center', // Centered horizontally
 		justifyContent: 'center', //Centered vertically
-
 		right: 0,
 	},
 	button: {
 		justifyContent: 'center',
 		alignItems: 'center', // Centered horizontally
 		justifyContent: 'center', //Centered vertically
-
-		// alignItems: 'center',
 		backgroundColor: '#5EA9F4',
 		padding: 5,
 	},
 	buttonleft: {
-		// alignItems: 'center',
 		backgroundColor: '#5EA9F4',
 		padding: 5,
 		alignItems: 'center', // Centered horizontally
 		justifyContent: 'center', //Centered vertically
-
-		// position: 'absolute',
-		// left: 0,
 		width: '50%',
 	},
 	row: {
