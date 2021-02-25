@@ -117,7 +117,9 @@ export default class App extends Component {
 							return <Ionicons name={iconName} size={25} />;
 						},
 					}}>
-					{(props) => <ActiveOrdersScreen />}
+					{(props) => (
+						<ActiveOrdersScreen {...props} username={this.state.username} />
+					)}
 				</Tab.Screen>
 			);
 		} else if (role === 'Admin') {

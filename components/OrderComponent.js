@@ -134,32 +134,57 @@ export default class OrderComponent extends React.Component {
 				}}
 				closeDialog={() => this.setState({ carmodal: false })}></DialogInput>
 		);
+		if (order.Status === 'Complete' && order.TimetoPickUp === '') {
+			pickuptime = 'Need to schedule!';
+		} else if (order.Status === 'Incomplete') {
+			pickuptime = 'Not ready yet!';
+		}
+
 		return (
 			<View style={styles.mealcard}>
 				{carmodal}
 				{timemodal}
 				<View style={styles.row}>
-					<Text style={{ fontWeight: '500', fontSize: 20 }}>
+					<Text style={{ fontWeight: '500', fontSize: 40 }}>
 						Status: {order.Status}
 					</Text>
+				</View>
+				{/* <View style={styles.row}>
+					<Text style={{ fontWeight: '400', fontSize: 16 }}>
+						Pick up Time: {pickuptime}
+					</Text>
+				</View> */}
+				<View style={styles.row}>
+					<Text style={{ fontWeight: '400', fontSize: 20 }}>Pickup:</Text>
+					<Text style={{ fontWeight: '600', fontSize: 20 }}>{pickuptime}</Text>
+				</View>
+				<View style={styles.row}>
+					<Text style={{ fontWeight: '400', fontSize: 20 }}>Cost:</Text>
+					<Text style={{ fontWeight: '600', fontSize: 20 }}>
+						{order.TotalCost}
+					</Text>
+				</View>
+				{/* <Text>Your Car: {order.CarDescription}</Text> */}
+				<View style={styles.row}>
+					<Text style={{ fontWeight: '400', fontSize: 20 }}>Your Car:</Text>
+					<Text style={{ fontWeight: '600', fontSize: 20 }}>
+						{order.CarDescription}
+					</Text>
+				</View>
+				<View
+					style={{
+						flexDirection: 'row',
+						paddingBottom: 10,
+						marginTop: 10,
+						alignItems: 'center',
+						justifyContent: 'center',
+					}}>
 					<TouchableOpacity
 						title='Update Pickup Time'
 						style={styles.buttonright}
 						onPress={() => this.setState({ timemodal: true })}>
 						<Text>Update Pickup Time </Text>
 					</TouchableOpacity>
-				</View>
-				<View style={styles.row}>
-					<Text style={{ fontWeight: '400', fontSize: 16 }}>
-						Pick up Time: {pickuptime}
-					</Text>
-				</View>
-
-				<View style={styles.row}>
-					<Text>Cost: {order.TotalCost}</Text>
-				</View>
-				<View style={styles.row}>
-					<Text>Picking up in a: {order.CarDescription}</Text>
 					<TouchableOpacity
 						style={styles.buttonright}
 						title='Change Car'
@@ -221,28 +246,12 @@ const styles = StyleSheet.create({
 		borderColor: '#5EA9F4',
 		borderWidth: 2,
 	},
-	buttonright: {
-		// alignItems: 'center',
-		backgroundColor: '#5EA9F4',
-		padding: 5,
-		position: 'absolute',
-		alignItems: 'center', // Centered horizontally
-		justifyContent: 'center', //Centered vertically
-		right: 0,
-	},
 	button: {
 		justifyContent: 'center',
 		alignItems: 'center', // Centered horizontally
 		justifyContent: 'center', //Centered vertically
-		backgroundColor: '#5EA9F4',
+		backgroundColor: 'limegreen',
 		padding: 5,
-	},
-	buttonleft: {
-		backgroundColor: '#5EA9F4',
-		padding: 5,
-		alignItems: 'center', // Centered horizontally
-		justifyContent: 'center', //Centered vertically
-		width: '50%',
 	},
 	row: {
 		flexDirection: 'row',
@@ -261,5 +270,17 @@ const styles = StyleSheet.create({
 		width: '50%',
 		borderColor: '#5EA9F4',
 		borderWidth: 1,
+	},
+	buttonright: {
+		borderWidth: 1,
+		height: 42,
+		marginLeft: 20,
+		marginRight: 20,
+		// width: '40%',
+		justifyContent: 'center',
+		borderRadius: 40,
+		backgroundColor: 'orange',
+		padding: 4,
+		// marginLeft: 10,
 	},
 });

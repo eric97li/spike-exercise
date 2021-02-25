@@ -10,6 +10,7 @@ import {
 	Button,
 	ScrollView,
 	StyleSheet,
+	Image,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -652,6 +653,12 @@ export default class MenuScreen extends Component {
 									}}>
 									Menu Screen
 								</Text>
+								<Image
+									style={styles.tinyLogo}
+									source={{
+										uri: 'himg/tiny_logo.png',
+									}}
+								/>
 								{/* <Button style={{borderRadius:50}} color="green" title="Add Item" onPress={()=>{this.setModalVisible(!modalVisible);}}/> */}
 								{/* <TouchableOpacity style={[styles.addButton, {display}]}> 
   							<Text style={styles.buttonText} onPress={()=>{this.setModalVisible(!modalVisible);}}>
@@ -676,7 +683,8 @@ export default class MenuScreen extends Component {
 								<ListItem.Subtitle>{x.Availability}</ListItem.Subtitle>
 								<ListItem.Subtitle>{x.Cost}</ListItem.Subtitle>
 								<ListItem.Subtitle>{x.MealID}</ListItem.Subtitle>
-								<ListItem.Subtitle>{x.Picture}</ListItem.Subtitle>
+								<ListItem.Subtitle> </ListItem.Subtitle>
+								{/* <ListItem.Subtitle>{x.Picture}</ListItem.Subtitle> */}
 							</ListItem.Content>
 							{/* <Button  style={{borderRadius:50}} color="orange" title="Update Item" onPress={()=>{this.setEditModalVisible(!editModalVisible, x.MealName, x.Picture, x.Cost, x.Availability);}}/> */}
 							{/* <TouchableOpacity style={[styles.updateButton, {display}]}> 
@@ -738,5 +746,16 @@ const styles = StyleSheet.create({
 	buttonText: {
 		fontSize: 15,
 		color: 'white',
+	},
+	container: {
+		paddingTop: 50,
+	},
+	tinyLogo: {
+		width: 50,
+		height: 50,
+	},
+	logo: {
+		width: 66,
+		height: 58,
 	},
 });

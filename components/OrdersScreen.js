@@ -11,6 +11,7 @@ export default class OrdersScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { orders: [] };
+		this.fetchData = this.fetchData.bind(this);
 	}
 
 	componentDidMount() {
@@ -33,7 +34,8 @@ export default class OrdersScreen extends Component {
 				'Content-Type': 'application/json',
 			},
 			//NEED TO CHANGE THIS
-			body: JSON.stringify({ UserName: 'JunyuTest' }),
+			// body: JSON.stringify({ UserName: 'JunyuTest' }),
+			body: JSON.stringify({ UserName: this.props.username }),
 		})
 			.then((response) => response.json())
 

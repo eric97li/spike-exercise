@@ -247,7 +247,7 @@ export default class OrderComponent extends React.Component {
 					</TouchableOpacity>
 				</View>
 
-				<View style={styles.row}>
+				<View style={{ flexDirection: 'row', paddingBottom: 6, marginTop: 20 }}>
 					<Text style={{ fontWeight: '400', fontSize: 20 }}>Pickup Time:</Text>
 					<Text style={{ fontWeight: '600', fontSize: 20 }}>{pickuptime}</Text>
 				</View>
@@ -257,7 +257,7 @@ export default class OrderComponent extends React.Component {
 						{carDescription}
 					</Text>
 				</View>
-				<Text style={{ fontWeight: '500', fontSize: 16 }}>
+				<Text style={{ fontWeight: '400', fontSize: 20 }}>
 					Created at: {createdtime}
 				</Text>
 
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 40,
-		backgroundColor: 'red',
+		backgroundColor: '#fa6243',
 		alignSelf: 'center',
 		textAlign: 'center',
 		right: 0,

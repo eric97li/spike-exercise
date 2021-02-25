@@ -6,7 +6,7 @@ import {
 	Text,
 	StyleSheet,
 } from 'react-native';
-import { withNavigationFocus } from 'react-navigation';
+// import { withNavigationFocus } from 'react-navigation';
 
 class LoginScreen extends Component {
 	constructor(props) {
