@@ -644,6 +644,7 @@ export default class MenuScreen extends Component {
 							fontSize: 40,
 							textAlign: 'center',
 							marginTop: '10%',
+							marginBottom: '2%',
 						}}>
 						Menu Screen
 					</Text>
