@@ -37,7 +37,6 @@ export default class ProfileScreen extends Component {
 				},
 				body: JSON.stringify({ UserName: this.props.username }),
 			})
-				// .then((response) => response.json())
 				.then((response) => response.json())
 
 				.then(async (json) => {
