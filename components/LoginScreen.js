@@ -93,6 +93,9 @@ class LoginScreen extends Component {
 					alignContent: 'center',
 					alignItems: 'center',
 				}}>
+				<Text style={{ fontWeight: '700', fontSize: 50 }}>Badger Bytes!</Text>
+				<View style={styles.spaceVertical}></View>
+
 				<TextInput
 					autoCapitalize='none'
 					placeholder={'Username'}
@@ -145,6 +148,9 @@ class LoginScreen extends Component {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+	spaceVertical: {
+		height: 80,
+	},
 	loginButton: {
 		borderWidth: 1,
 		height: 42,

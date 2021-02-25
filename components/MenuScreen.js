@@ -291,7 +291,7 @@ export default class MenuScreen extends Component {
 		if (this.props.role == 'Customer') {
 			return (
 				<View>
-					<Text style={{ marginBottom: 10, fontSize: '20' }}>
+					<Text style={{ marginBottom: 10, fontSize: 20 }}>
 						Current Order: {this.state.orderNames}
 					</Text>
 					<TouchableOpacity style={[styles.addButton]}>
@@ -376,11 +376,11 @@ export default class MenuScreen extends Component {
 								placeholder={'Available'}
 								defaultValue={this.state.availability}
 								containerStyle={{ width: 150, height: 40 }}
-								style={{ backgroundColor: '#fafafa' }}
+								// style={{ backgroundColor: '#fafafa' }}
 								itemStyle={{
 									justifyContent: 'flex-start',
 								}}
-								dropDownStyle={{ backgroundColor: '#fafafa' }}
+								// dropDownStyle={{ backgroundColor: '#fafafa' }}
 								onChangeItem={(item) =>
 									this.setState({
 										availability: item.value,
@@ -416,7 +416,7 @@ export default class MenuScreen extends Component {
 										justifyContent: 'center',
 										alignItems: 'center',
 										borderRadius: 5,
-										backgroundColor: 'white',
+										// backgroundColor: 'white',
 										alignSelf: 'center',
 										textAlign: 'center',
 									}}
@@ -487,11 +487,11 @@ export default class MenuScreen extends Component {
 								placeholder={'Available'}
 								defaultValue={this.state.availability}
 								containerStyle={{ width: 150, height: 40 }}
-								style={{ backgroundColor: '#fafafa' }}
+								// style={{ backgroundColor: '#fafafa' }}
 								itemStyle={{
 									justifyContent: 'flex-start',
 								}}
-								dropDownStyle={{ backgroundColor: '#fafafa' }}
+								// dropDownStyle={{ backgroundColor: '#fafafa' }}
 								onChangeItem={(item) =>
 									this.setState({
 										availability: item.value,
@@ -533,7 +533,7 @@ export default class MenuScreen extends Component {
 										justifyContent: 'center',
 										alignItems: 'center',
 										borderRadius: 5,
-										backgroundColor: 'white',
+										// backgroundColor: 'white',
 										alignSelf: 'center',
 										textAlign: 'center',
 									}}
@@ -582,11 +582,11 @@ export default class MenuScreen extends Component {
 								placeholder={'Available'}
 								defaultValue={this.state.availability}
 								containerStyle={{ width: 150, height: 40 }}
-								style={{ backgroundColor: '#fafafa' }}
+								// style={{ backgroundColor: '#fafafa' }}
 								itemStyle={{
 									justifyContent: 'flex-start',
 								}}
-								dropDownStyle={{ backgroundColor: '#fafafa' }}
+								// dropDownStyle={{ backgroundColor: '#fafafa' }}
 								onChangeItem={(item) =>
 									this.setState({
 										availability: item.value,
@@ -623,7 +623,7 @@ export default class MenuScreen extends Component {
 										justifyContent: 'center',
 										alignItems: 'center',
 										borderRadius: 5,
-										backgroundColor: 'white',
+										// backgroundColor: 'white',
 										alignSelf: 'center',
 										textAlign: 'center',
 									}}
@@ -638,6 +638,16 @@ export default class MenuScreen extends Component {
 				</Modal>
 
 				<View>
+					<Text
+						style={{
+							fontWeight: '700',
+							fontSize: 40,
+							textAlign: 'center',
+							marginTop: '10%',
+						}}>
+						Menu Screen
+					</Text>
+
 					{
 						<ListItem bottomDivider>
 							<ListItem.Content
@@ -709,6 +719,8 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		textAlign: 'center',
 		padding: 4,
+		paddingLeft: 10,
+		paddingRight: 10,
 	},
 
 	updateButton: {

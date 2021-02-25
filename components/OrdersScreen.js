@@ -92,7 +92,7 @@ export default class OrdersScreen extends Component {
 					<Text
 						style={{
 							fontWeight: '700',
-							fontSize: 30,
+							fontSize: 40,
 							textAlign: 'center',
 							paddingBottom: '10%',
 						}}>

@@ -107,20 +107,10 @@ export default class ProfileScreen extends Component {
 					</Text>
 					<Text style={{ fontSize: 20 }}>Update Your Account Info Below</Text>
 					<View style={{ height: 50 }}></View>
-
-					{/* <Text>Username</Text>
-					<TextInput
-						ref={this.userInput}
-						placeholderTextColor='#5EA9F4'
-						style={styles.input}
-						onChangeText={(text) => this.setState({ UserName: text })}
-						placeholder={this.state.UserName}
-					/> */}
 					<Text>Username</Text>
 					<TextInput
 						ref={this.userInput}
 						// secureTextEntry={true}
-						placeholderTextColor='#5EA9F4'
 						style={styles.input}
 						onChangeText={(text) => this.setState({ UserName: text })}
 						placeholder={this.state.UserName}
@@ -129,7 +119,6 @@ export default class ProfileScreen extends Component {
 					<TextInput
 						ref={this.passInput}
 						// secureTextEntry={true}
-						placeholderTextColor='#5EA9F4'
 						style={styles.input}
 						onChangeText={(text) => this.setState({ PassWord: text })}
 						placeholder={this.state.PassWord}
@@ -138,7 +127,6 @@ export default class ProfileScreen extends Component {
 					<Text>Phone Number</Text>
 					<TextInput
 						ref={this.phoneInput}
-						placeholderTextColor='#5EA9F4'
 						style={styles.input}
 						onChangeText={(text) => this.setState({ Phone: text })}
 						placeholder={this.state.Phone}
@@ -147,7 +135,6 @@ export default class ProfileScreen extends Component {
 					<Text>Address</Text>
 					<TextInput
 						ref={this.addressInput}
-						placeholderTextColor='#5EA9F4'
 						style={styles.input}
 						onChangeText={(text) => this.setState({ Address: text })}
 						placeholder={this.state.Address}
@@ -156,7 +143,6 @@ export default class ProfileScreen extends Component {
 					<Text>Preferred Payment</Text>
 					<TextInput
 						ref={this.paymentInput}
-						placeholderTextColor='#5EA9F4'
 						style={styles.input}
 						onChangeText={(text) => this.setState({ PaymentType: text })}
 						placeholder={this.state.PaymentType}
@@ -195,24 +181,23 @@ const styles = StyleSheet.create({
 	},
 
 	input: {
-		width: 200,
 		padding: 10,
 		margin: 5,
 		height: 40,
-		borderColor: '#5EA9F4',
-		borderWidth: 1,
-	},
-	timeinput: {
-		width: 300,
-		padding: 10,
-		margin: 5,
-		height: 100,
-		borderColor: '#5EA9F4',
+		width: '80%',
+		borderColor: 'black',
 		borderWidth: 1,
 	},
 	button: {
+		borderWidth: 1,
+		height: 42,
+		width: '80%',
+		marginTop: 30,
+		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#5EA9F4',
-		padding: 10,
+		borderRadius: 40,
+		backgroundColor: 'limegreen',
+		alignSelf: 'center',
+		textAlign: 'center',
 	},
 });

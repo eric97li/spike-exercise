@@ -224,10 +224,10 @@ export default class OrderComponent extends React.Component {
 							{this.props.order.Priority}
 						</Text>
 					</View>
+
 					<TouchableOpacity
-						style={styles.buttongreen}
-						title='Priority'
-						onPress={this.increasePriority}>
+						style={styles.increaseButton}
+						onPress={() => this.goToSignUp()}>
 						<Text>Increase Priority! </Text>
 					</TouchableOpacity>
 				</View>
@@ -240,7 +240,7 @@ export default class OrderComponent extends React.Component {
 						</Text>
 					</View>
 					<TouchableOpacity
-						style={styles.buttonred}
+						style={styles.decreaseButton}
 						title='Priority'
 						onPress={this.decreasePriority}>
 						<Text>Decrease Priority! </Text>
@@ -273,6 +273,32 @@ export default class OrderComponent extends React.Component {
 }
 
 const styles = StyleSheet.create({
+	increaseButton: {
+		borderWidth: 1,
+		height: 42,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 40,
+		backgroundColor: '#5EA9F4',
+		alignSelf: 'center',
+		textAlign: 'center',
+		right: 0,
+		position: 'absolute',
+		padding: 5,
+	},
+	decreaseButton: {
+		borderWidth: 1,
+		height: 42,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 40,
+		backgroundColor: 'red',
+		alignSelf: 'center',
+		textAlign: 'center',
+		right: 0,
+		position: 'absolute',
+		padding: 5,
+	},
 	foodcard: {
 		alignItems: 'center',
 		marginBottom: 7,
@@ -293,39 +319,13 @@ const styles = StyleSheet.create({
 		borderColor: '#5EA9F4',
 		borderWidth: 2,
 	},
-	buttongreen: {
-		// alignItems: 'center',
-		backgroundColor: 'limegreen',
-		padding: 5,
-		position: 'absolute',
-		alignItems: 'center', // Centered horizontally
-		justifyContent: 'center', //Centered vertically
 
-		right: 0,
-	},
-	buttonred: {
-		// alignItems: 'center',
-		backgroundColor: 'red',
-		padding: 5,
-		position: 'absolute',
-		alignItems: 'center', // Centered horizontally
-		justifyContent: 'center', //Centered vertically
-
-		right: 0,
-	},
 	button: {
 		justifyContent: 'center',
 		alignItems: 'center', // Centered horizontally
 		justifyContent: 'center', //Centered vertically
-		backgroundColor: '#5EA9F4',
+		backgroundColor: 'limegreen',
 		padding: 5,
-	},
-	buttonleft: {
-		backgroundColor: '#5EA9F4',
-		padding: 5,
-		alignItems: 'center', // Centered horizontally
-		justifyContent: 'center', //Centered vertically
-		width: '50%',
 	},
 	row: {
 		flexDirection: 'row',

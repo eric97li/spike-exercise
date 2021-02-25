@@ -93,7 +93,7 @@ export default class ActiveOrdersScreen extends Component {
 						onPress={() =>
 							this.setState({ activemode: !this.state.activemode })
 						}>
-						<Text style={{ fontWeight: '700', fontSize: 20 }}>
+						<Text style={{ fontWeight: '500', fontSize: 20 }}>
 							Toggle Active Mode from: {this.state.activemode.toString()}{' '}
 						</Text>
 					</TouchableOpacity>
@@ -109,12 +109,15 @@ export default class ActiveOrdersScreen extends Component {
 
 const styles = StyleSheet.create({
 	button: {
+		borderWidth: 1,
+		height: 42,
 		justifyContent: 'center',
-		alignItems: 'center', // Centered horizontally
-		justifyContent: 'center', //Centered vertically
+		alignItems: 'center',
+		borderRadius: 40,
 		backgroundColor: 'orange',
+		alignSelf: 'center',
+		textAlign: 'center',
 		padding: 5,
-
-		marginBottom: '5%',
+		marginBottom: 20,
 	},
 });

@@ -188,7 +188,7 @@ export default class UsageReports extends Component {
 				<TextInput
 					ref={this.passInput}
 					// secureTextEntry={true}
-					placeholderTextColor='#5EA9F4'
+					// placeholderTextColor='orange'
 					style={styles.input}
 					placeholder='Enter a food of interest'
 					onChangeText={(mealname) => this.setState({ mealname: mealname })}
@@ -253,8 +253,10 @@ const styles = StyleSheet.create({
 		height: 44,
 		width: 200,
 		margin: 5,
-		backgroundColor: '#5EA9F4',
+		backgroundColor: 'orange',
 		padding: 5,
+		borderRadius: 40,
+		borderWidth: 1,
 	},
 	submitbutton: {
 		justifyContent: 'center',
@@ -265,13 +267,15 @@ const styles = StyleSheet.create({
 		margin: 5,
 		backgroundColor: 'limegreen',
 		padding: 5,
+		borderRadius: 40,
+		borderWidth: 1,
 	},
 	input: {
 		width: 200,
 		padding: 10,
 		margin: 5,
 		height: 40,
-		borderColor: '#5EA9F4',
+		// borderColor: 'orange',
 		borderWidth: 1,
 	},
 	row: {
