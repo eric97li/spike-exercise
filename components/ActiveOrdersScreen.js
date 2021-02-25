@@ -15,12 +15,12 @@ export default class ActiveOrdersScreen extends Component {
 	}
 
 	componentDidMount() {
-		// this._unsubscribe = this.props.navigation.addListener('focus', () => {
-		this.fetchData();
-		// });
+		this._unsubscribe = this.props.navigation.addListener('focus', () => {
+			this.fetchData();
+		});
 	}
 	componentWillUnmount() {
-		// this._unsubscribe();
+		this._unsubscribe();
 	}
 	// orderCallback() {
 	// 	this.fetchData();
