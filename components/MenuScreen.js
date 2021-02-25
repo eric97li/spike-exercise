@@ -638,21 +638,20 @@ export default class MenuScreen extends Component {
 				</Modal>
 
 				<View>
-					<Text
-						style={{
-							fontWeight: '700',
-							fontSize: 40,
-							textAlign: 'center',
-							marginTop: '10%',
-							marginBottom: '2%',
-						}}>
-						Menu Screen
-					</Text>
-
 					{
 						<ListItem bottomDivider>
 							<ListItem.Content
 								style={{ alignItems: 'center', flexDirection: 'column' }}>
+								<Text
+									style={{
+										fontWeight: '700',
+										fontSize: 40,
+										textAlign: 'center',
+										marginTop: '10%',
+										marginBottom: '2%',
+									}}>
+									Menu Screen
+								</Text>
 								{/* <Button style={{borderRadius:50}} color="green" title="Add Item" onPress={()=>{this.setModalVisible(!modalVisible);}}/> */}
 								{/* <TouchableOpacity style={[styles.addButton, {display}]}> 
   							<Text style={styles.buttonText} onPress={()=>{this.setModalVisible(!modalVisible);}}>
