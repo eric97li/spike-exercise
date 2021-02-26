@@ -8,7 +8,6 @@ import {
 	StyleSheet,
 } from 'react-native';
 import ActiveOrderComponent from './ActiveOrderComponent';
-// import { withNavigationFocus } from 'react-navigation';
 
 export default class ActiveOrdersScreen extends Component {
 	constructor(props) {
@@ -18,44 +17,15 @@ export default class ActiveOrdersScreen extends Component {
 	}
 
 	componentDidMount() {
-		console.log('CDU');
-		console.log(this.props);
-
 		this._unsubscribe = this.props.navigation.addListener('focus', () => {
-			// do something
 			this.fetchData();
 		});
 	}
-	// componentDidMount() {
-	// 	// console.log(this.props.navigation);
-
-	// }
-	// componentDidMount() {
-	// 	const { navigation } = this.props;
-	// 	this.focusListener = navigation.addListener('didFocus', () => {
-	// 		// The screen is focused
-	// 		// Call any action
-	// 		this.fetchData();
-	// 	});
-	// }
-	// componentWillUnmount() {
-	// 	// Remove the event listener
-	// 	this.focusListener.remove();
-	//   }
-	// componentDidUpdate(prevProps) {
-	// 	if (prevProps.isFocused !== this.props.isFocused) {
-	// 		// Use the `this.props.isFocused` boolean
-	// 		// Call any action
-	// 		this.fetchData();
-	// 	}
-	// }
 
 	componentWillUnmount() {
 		this._unsubscribe();
 	}
-	// orderCallback() {
-	// 	this.fetchData();
-	// }
+
 	fetchData() {
 		console.log('Fetching Data');
 		// console.log('FETCHING DATA CALLED');
@@ -116,7 +86,7 @@ export default class ActiveOrdersScreen extends Component {
 						alignItems: 'center',
 					}}>
 					<Text
-						style={{ fontWeight: '700', fontSize: 30, paddingBottom: '5%' }}>
+						style={{ fontWeight: '700', fontSize: 40, paddingBottom: '5%' }}>
 						Active Orders!
 					</Text>
 					<TouchableOpacity
@@ -138,7 +108,6 @@ export default class ActiveOrdersScreen extends Component {
 		);
 	}
 }
-// export default withNavigationFocus(ActiveOrdersScreen);
 
 const styles = StyleSheet.create({
 	button: {
