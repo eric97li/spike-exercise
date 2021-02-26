@@ -57,7 +57,7 @@ export default class SignUp extends Component {
 			Address: address,
 			PaymentType: preferredPayment,
 		};
-		console.log(JSON.stringify(data));
+		// console.log(JSON.stringify(data));
 		fetch('https://ripple506.herokuapp.com/CreateAccount', {
 			method: 'POST',
 			headers: {

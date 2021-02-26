@@ -1,7 +1,9 @@
 # Installation
 
 npm install
+
 expo install
+
 expo start
 
 # Sample Accounts

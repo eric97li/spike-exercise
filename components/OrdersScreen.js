@@ -76,7 +76,7 @@ export default class OrdersScreen extends Component {
 		return orderComponents;
 	}
 	render() {
-		console.log('RENDER');
+		// console.log('RENDER');
 		// console.log(this.props);
 		console.log(this.props.username);
 		return (
