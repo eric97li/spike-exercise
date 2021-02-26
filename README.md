@@ -1,4 +1,9 @@
-# Installation
+# Details
+
+React Native App that runs on Expo Go!
+Need to install "Expo Go" on your mobile device
+
+# React Native
 
 npm install
 
