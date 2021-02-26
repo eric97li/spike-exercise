@@ -6,9 +6,12 @@ import {
 	Text,
 	ScrollView,
 	StyleSheet,
+	LogBox,
 } from 'react-native';
 import ActiveOrderComponent from './ActiveOrderComponent';
 
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 export default class ActiveOrdersScreen extends Component {
 	constructor(props) {
 		super(props);
