@@ -43,7 +43,7 @@ export default class OrderComponent extends React.Component {
 			// .then((response) => response.json())
 			.then((response) => response.json())
 
-			.then(async (json) => {
+			.then((json) => {
 				console.log(json);
 				// this.setState({ order: json });
 				// console.log(json);
@@ -79,6 +79,7 @@ export default class OrderComponent extends React.Component {
 				// alert(json.Reason);
 				if (json.Status) {
 					this.props.orderCallback();
+					// this.fetchData();
 				}
 			});
 	}
@@ -106,6 +107,7 @@ export default class OrderComponent extends React.Component {
 				// alert(json.Reason);
 				if (json.Status) {
 					this.props.orderCallback();
+					// this.fetchData();
 				}
 			});
 	}
@@ -227,7 +229,7 @@ export default class OrderComponent extends React.Component {
 
 					<TouchableOpacity
 						style={styles.increaseButton}
-						onPress={() => this.goToSignUp()}>
+						onPress={this.increasePriority}>
 						<Text>Increase Priority! </Text>
 					</TouchableOpacity>
 				</View>
@@ -257,10 +259,11 @@ export default class OrderComponent extends React.Component {
 						{carDescription}
 					</Text>
 				</View>
-				<Text style={{ fontWeight: '400', fontSize: 20 }}>
-					Created at: {createdtime}
-				</Text>
-
+				<View style={styles.row}>
+					<Text style={{ fontWeight: '400', fontSize: 20 }}>
+						Created at: {createdtime}
+					</Text>
+				</View>
 				<TouchableOpacity
 					style={styles.button}
 					title='Mark Complete'
@@ -285,6 +288,7 @@ const styles = StyleSheet.create({
 		right: 0,
 		position: 'absolute',
 		padding: 5,
+		paddingLeft: 12, //align with decrease button
 	},
 	decreaseButton: {
 		borderWidth: 1,

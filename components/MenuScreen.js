@@ -178,9 +178,19 @@ export default class MenuScreen extends Component {
 	};
 
 	createOrder = () => {
+		console.log('Create Order called');
+
+		console.log(Date());
 		if (this.state.orderNames.length == 0) {
 			alert('No items have been added to order');
 		} else {
+			console.log(
+				JSON.stringify({
+					'UserName': this.props.username,
+					'FoodItems': this.state.order,
+					'DateCreated': Date(),
+				})
+			);
 			return fetch('https://ripple506.herokuapp.com/CreateOrder', {
 				method: 'POST',
 				headers: {
@@ -189,7 +199,7 @@ export default class MenuScreen extends Component {
 				body: JSON.stringify({
 					'UserName': this.props.username,
 					'FoodItems': this.state.order,
-					'DateCreated': new Date(),
+					'DateCreated': Date(),
 				}),
 			}).then((response) => {
 				return fetch('https://ripple506.herokuapp.com/GetAccountInfo', {
@@ -208,7 +218,8 @@ export default class MenuScreen extends Component {
 						);
 
 						// clear the order queue
-						this.setState({ order: [] });
+						this.setState({ order: [], orderNames: '' });
+						// this.forceUpdate();
 					});
 			});
 		}
@@ -310,7 +321,9 @@ export default class MenuScreen extends Component {
 		if (this.props.role == 'Customer') {
 			return (
 				<View>
-					<Text>Current order: {this.state.orderNames}</Text>
+					<Text style={{ fontSize: 20, marginBottom: 20 }}>
+						Current order: {this.state.orderNames}
+					</Text>
 					<TouchableOpacity style={[styles.addButton]}>
 						<Text
 							style={styles.buttonText}

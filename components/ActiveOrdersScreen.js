@@ -44,7 +44,7 @@ export default class ActiveOrdersScreen extends Component {
 			// .then((response) => response.json())
 			.then((response) => response.json())
 
-			.then(async (json) => {
+			.then((json) => {
 				// console.log(json);
 				this.setState({ orders: json });
 			});
