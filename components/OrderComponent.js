@@ -29,13 +29,43 @@ export default class OrderComponent extends React.Component {
 	async compilePDF() {
 		//PDF needs to include everything. Try to format it like an actual receipt
 		//Center, receipt. Include costs and food items.
-
 		//Everything can be access by this.props.blank
 		//this.props.order.OrderID
 		//this.props.order.FoodItems
 		//this.props.order. you get the idea
-
-		const html = `<h1> Your Meal Receipt </h1>`;
+		const order = this.props;
+		if (order.Status === 'Incomplete') {
+			alert('Order is not complete yet!');
+			return;
+		}
+		// console.log(this.props);
+		// console.log(this.props.order.FoodItems);
+		// console.log(order.FoodItems);
+		const foodString = order.FoodItems.map((foodItem, index) => {
+			////Only print first few items
+			// console.log(index);
+			if (index === order.FoodItems.length - 1) {
+				return ' and ' + foodItem + '.';
+			} else {
+				return ' ' + foodItem;
+			}
+		});
+		const html =
+			'<h1 style = "text-align: center; font-size: 50px"> Badger Bytes! </h1><h1 style = "text-align: center"> Your Meal Receipt! </h1>' +
+			'<h2 style = "text-align: center"> Date: ' +
+			moment(order.CreatedTime).calendar() +
+			' </h2>' +
+			'<h3 style = "text-align: center"> Cost: $' +
+			order.TotalCost +
+			' </h3><h2 style = "text-align: center; margin-bottom: 50px">' +
+			foodString +
+			'</h2><h4 style = "text-align: center">Pick up Car: ' +
+			order.CarDescription +
+			'<br/>Pick up Time: ' +
+			moment(order.TimetoPickUp).calendar() +
+			' </h4><h2 style = "text-align: center; margin-top: 200px">Order ID: <br/>' +
+			order.OrderID +
+			'</h2>';
 		const { uri } = await Print.printToFileAsync({ html });
 		Sharing.shareAsync(uri);
 	}
@@ -111,7 +141,7 @@ export default class OrderComponent extends React.Component {
 		let pickuptime = '';
 		if (order.TimetoPickUp !== '') {
 			pickuptime = moment(order.TimetoPickUp).calendar();
-			console.log(moment(order.TimetoPickUp).calendar());
+			// console.log(moment(order.TimetoPickUp).calendar());
 		}
 
 		let timemodal = (
