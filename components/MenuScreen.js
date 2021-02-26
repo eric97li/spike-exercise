@@ -681,7 +681,7 @@ export default class MenuScreen extends Component {
 									{x.MealName}
 								</ListItem.Title>
 								<ListItem.Subtitle>{x.Availability}</ListItem.Subtitle>
-								<ListItem.Subtitle>{x.Cost}</ListItem.Subtitle>
+								<ListItem.Subtitle>${x.Cost}</ListItem.Subtitle>
 								<Image
 									style={{ width: '100%', height: 200, resizeMode: 'stretch' }}
 									source={{ uri: x.Picture }}
