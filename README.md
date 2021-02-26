@@ -13,13 +13,26 @@ expo start
 
 # Sample Accounts
 
-(Supports sign up but if you don't want to create a new account)
+(App supports sign up but if you don't want to create a new account)
 
-Username/Role: Customer
-pw: password
+    Username: Customer
 
-Username/Role: Staff
-pw: password
+    (role is Customer)
 
-Admin/Role: Admin password
-pw: password
+    password: password
+
+
+
+    Username/Role: Staff
+
+    (role is Staff)
+
+    password: password
+
+
+
+    Admin/Role: Admin password
+
+    (role is Admin)
+
+    password: password
