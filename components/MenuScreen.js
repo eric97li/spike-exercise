@@ -117,7 +117,7 @@ export default class MenuScreen extends Component {
 				})
 					.then((response) => response.json())
 					.then((response) => {
-						this.setState({ items: response });
+						this.setState({ items: response, modalVisible: false });
 					});
 			});
 		}
@@ -145,13 +145,14 @@ export default class MenuScreen extends Component {
 				})
 					.then((response) => response.json())
 					.then((response) => {
-						this.setState({ items: response });
+						this.setState({ items: response, editModalVisible: false });
 					});
 			});
 		}
 	};
 
 	updateItemStatus = () => {
+		console.log('UIS');
 		return fetch('https://ripple506.herokuapp.com/UpdateItem', {
 			method: 'POST',
 			headers: {
@@ -170,7 +171,8 @@ export default class MenuScreen extends Component {
 			})
 				.then((response) => response.json())
 				.then((response) => {
-					this.setState({ items: response });
+					console.log('Update');
+					this.setState({ items: response, inventoryModalVisible: false });
 				});
 		});
 	};

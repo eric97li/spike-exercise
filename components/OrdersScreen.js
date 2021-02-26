@@ -49,7 +49,7 @@ export default class OrdersScreen extends Component {
 
 	getOrderItems() {
 		const { orders } = this.state;
-		let props = ['DUMMYDATA'];
+		// let props = ['DUMMYDATA'];
 		let orderComponents = [];
 		for (let i = 0; i < orders.length; i++) {
 			// console.log(i);
